@@ -1,0 +1,475 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'Manage My Money API'
+  description: 'An API to access my financial information'
+
+servers:
+  - description: Dev Server
+    url: http://localhost:8080/api
+
+paths:
+  /accounts:
+    get:
+      description: Get all accounts
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accounts'
+
+    post:
+      description: Create an account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountInput'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /accounts/{id}:
+    get:
+      description: Get a specific account
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the account
+          schema:
+            type: number
+            example: 1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        404:
+          description: NotFoundError
+
+    put:
+      description: Update an account
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the account
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+    delete:
+      description: Delete an account
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the account
+          schema:
+            type: number
+            example: 1
+      responses:
+        204:
+          description: Success
+
+  /categories:
+    get:
+      description: Get all categories
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categories'
+
+    post:
+      description: Create an category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCategoryInput'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+
+  /categories/{id}:
+    get:
+      description: Get a specific category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the category
+          schema:
+            type: number
+            example: 1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          description: NotFoundError
+
+    put:
+      description: Update an category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the category
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+
+    delete:
+      description: Delete an category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the category
+          schema:
+            type: number
+            example: 1
+      responses:
+        204:
+          description: Success
+
+  /transactions:
+    get:
+      description: Get all transactions
+      parameters:
+        - in: query
+          name: account
+          required: false
+          description: Gets transactions for the specified account
+          schema:
+            type: number
+            example: 1
+        - in: query
+          name: groupByCategory
+          required: false
+          description: Gets transaction summaries by category
+          schema:
+            type: boolean
+            example: true
+        - in: query
+          name: startDate
+          required: false
+          description: Gets transaction summaries for txn dates on or after startDate (valid when groupByCategory is specified)
+          schema:
+            type: string
+            example: 2014-01-01
+        - in: query
+          name: endDate
+          required: false
+          description: Gets transaction summaries for txn dates on or before endDate (valid when groupByCategory is specified)
+          schema:
+            type: string
+            example: 2014-12-31
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -   $ref: '#/components/schemas/Transactions'
+                  -   $ref: '#/components/schemas/TransactionSummariesByCategory'
+
+    post:
+      description: Create a transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionInput'
+      responses:
+        200:
+          description: Success - returns CreateTransactionInput + id
+
+  /transactions/{id}:
+    get:
+      description: Get a specific transaction
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the transaction
+          schema:
+            type: number
+            example: 1
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        404:
+          description: NotFoundError
+
+    put:
+      description: Update a transaction
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the transaction
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTransactionInput'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTransactionInput'
+
+    delete:
+      description: Delete an transaction
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: identifier of the transaction
+          schema:
+            type: number
+            example: 1
+      responses:
+        204:
+          description: Success
+
+components:
+  schemas:
+    Account:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: BofA Checking
+
+    Accounts:
+      type: array
+      items:
+        $ref: '#/components/schemas/Account'
+
+    CreateAccountInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: BofA Checking
+
+    Category:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: number
+          example: 1
+        name:
+          type: string
+          example: Transport
+
+    Categories:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'
+
+    CreateCategoryInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Transport
+
+    Transaction:
+      type: object
+      required:
+        - id
+        - txnDate
+        - payee
+        - amount
+        - account
+        - category
+      properties:
+        id:
+          type: number
+          example: 1
+        txnDate:
+          type: string
+          description: ISO 8601 format
+          example: 2013-01-01T00:00:00.000Z
+        payee:
+          type: string
+          example: Whole Foods
+        memo:
+          type: string
+          example: Groceries for soup kitchen
+        amount:
+          type: string
+          description: Positive for income, negative for expense
+          example: -55.74
+        account:
+          $ref: '#/components/schemas/Account'
+        category:
+          $ref: '#/components/schemas/Category'
+
+    Transactions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Transaction'
+
+    TransactionSummaryByCategory:
+      type: object
+      required:
+        - catId
+        - catName
+        - amount
+      properties:
+        catId:
+          type: number
+          example: 1
+        catName:
+          type: string
+          example: Transport
+        amount:
+          type: string
+          description: Positive for income, negative for expense
+          example: -55.74
+
+    TransactionSummariesByCategory:
+      type: array
+      items:
+        $ref: '#/components/schemas/TransactionSummaryByCategory'
+
+    CreateTransactionInput:
+      type: object
+      required:
+        - txnDate
+        - payee
+        - amount
+        - accountId
+        - categoryId
+      properties:
+        txnDate:
+          type: string
+          description: ISO 8601 format
+          example: 2013-01-01T00:00:00.000Z
+        payee:
+          type: string
+          example: Whole Foods
+        memo:
+          type: string
+          example: Groceries for soup kitchen
+        amount:
+          type: string
+          description: Positive for income, negative for expense
+          example: -55.74
+        accountId:
+          type: number
+          example: 1
+        categoryId:
+          type: number
+          example: 1
+
+    UpdateTransactionInput:
+      type: object
+      required:
+        - id
+        - txnDate
+        - payee
+        - amount
+        - accountId
+        - categoryId
+      properties:
+        id:
+          type: number
+          example: 1
+        txnDate:
+          type: string
+          description: ISO 8601 format
+          example: 2013-01-01T00:00:00.000Z
+        payee:
+          type: string
+          example: Whole Foods
+        memo:
+          type: string
+          example: Groceries for soup kitchen
+        amount:
+          type: string
+          description: Positive for income, negative for expense
+          example: -55.74
+        accountId:
+          type: number
+          example: 1
+        categoryId:
+          type: number
+          example: 1

@@ -1,0 +1,44 @@
+{
+    "name": "mmm-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/server.js",
+    "author": "Naresh Bhatia",
+    "license": "MIT",
+    "scripts": {
+        "start": "nodemon --exec babel-node --inspect src/server.js",
+        "prebuild": "rimraf dist",
+        "build": "npm run lint && babel src --out-dir dist && npm run copy-to-dist",
+        "serve": "node dist/server.js",
+        "lint": "eslint src --ext .js",
+        "format": "prettier --write '*.{js,md}' 'src/**/*.js'",
+        "copy-to-dist": "copyfiles --up 1 src/openapi.json dist"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "cors": "^2.8.5",
+        "dotenv": "^7.0.0",
+        "express": "^4.16.4",
+        "express-async-handler": "^1.1.4",
+        "join-js": "^1.0.2",
+        "knex": "^0.16.3",
+        "pg": "^7.9.0",
+        "pg-parse-float": "0.0.1",
+        "swagger-ui-express": "^4.0.2"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.2.3",
+        "@babel/core": "^7.4.0",
+        "@babel/node": "^7.2.2",
+        "@babel/plugin-proposal-class-properties": "^7.4.0",
+        "@babel/preset-env": "^7.4.2",
+        "babel-eslint": "^10.0.1",
+        "copyfiles": "^2.1.0",
+        "eslint": "^5.16.0",
+        "eslint-config-prettier": "^4.1.0",
+        "eslint-plugin-prettier": "^3.0.1",
+        "nodemon": "^1.18.10",
+        "prettier": "^1.16.4",
+        "rimraf": "^2.6.3"
+    }
+}

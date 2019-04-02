@@ -1,0 +1,19 @@
+version: "3"
+services:
+
+    mmm-server:
+        image: nareshbhatia/manage-my-money-server:1.0.0
+        ports:
+            - "8080:8080"
+        depends_on:
+            - mmm-db
+        environment:
+            DB_HOST: mmm-db
+            DB_USER: postgres
+            DB_PASSWORD: docker
+            DB_DATABASE: postgres
+
+    mmm-db:
+        image: nareshbhatia/manage-my-money-db:1.0.0
+        ports:
+            - "5432:5432"
