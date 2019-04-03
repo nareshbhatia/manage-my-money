@@ -20,8 +20,8 @@ const theme = createMuiTheme({
     }
 });
 
-export function wrapTheme<P>(Component: React.ComponentType<P>) {
-    function WrapTheme(props: P) {
+export function withMui<P>(Component: React.ComponentType<P>) {
+    function WithMui(props: P) {
         return (
             <ThemeProvider theme={theme}>
                 <CssBaseline />
@@ -30,5 +30,5 @@ export function wrapTheme<P>(Component: React.ComponentType<P>) {
         );
     }
 
-    return WrapTheme;
+    return WithMui;
 }

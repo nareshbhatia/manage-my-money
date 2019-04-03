@@ -6,7 +6,7 @@ import {
     FlexRow,
     FullHeightContainer,
     Header,
-    wrapTheme
+    withMui
 } from '../../components';
 import { AccountsPanel } from './AccountsPanel';
 import { TransactionsPanel } from './TransactionsPanel';
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const TransactionsPage = wrapTheme(() => {
+export const TransactionsPage = withMui(() => {
     const classes = useStyles();
 
     return (

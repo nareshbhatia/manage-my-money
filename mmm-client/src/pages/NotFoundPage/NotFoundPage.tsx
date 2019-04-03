@@ -5,10 +5,10 @@ import {
     CenteredContainer,
     FullHeightContainer,
     Header,
-    wrapTheme
+    withMui
 } from '../../components';
 
-export const NotFoundPage = wrapTheme(() => {
+export const NotFoundPage = withMui(() => {
     return (
         <FullHeightContainer>
             <Header />
