@@ -4,11 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import {
     CenteredContainer,
     FullHeightContainer,
-    Header,
-    withMui
+    Header
 } from '../../components';
 
-export const NotFoundPage = withMui(() => {
+export const NotFoundPage = () => {
     return (
         <FullHeightContainer>
             <Header />
@@ -19,4 +18,4 @@ export const NotFoundPage = withMui(() => {
             </CenteredContainer>
         </FullHeightContainer>
     );
-});
+};

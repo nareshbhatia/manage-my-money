@@ -5,8 +5,7 @@ import {
     FlexContainer,
     FlexRow,
     FullHeightContainer,
-    Header,
-    withMui
+    Header
 } from '../../components';
 import { AccountsPanel } from './AccountsPanel';
 import { TransactionsPanel } from './TransactionsPanel';
@@ -18,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const TransactionsPage = withMui(() => {
+export const TransactionsPage = () => {
     const classes = useStyles();
 
     return (
@@ -34,4 +33,4 @@ export const TransactionsPage = withMui(() => {
             </FlexRow>
         </FullHeightContainer>
     );
-});
+};
