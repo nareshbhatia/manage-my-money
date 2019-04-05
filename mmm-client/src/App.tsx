@@ -8,6 +8,7 @@ import { history } from './utils';
 
 // Create the rootStore
 const rootStore = new RootStore();
+rootStore.init();
 
 // Observe history changes
 const historyAdapter = new HistoryAdapter(rootStore.routerStore, history);

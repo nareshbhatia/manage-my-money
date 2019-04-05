@@ -13,6 +13,10 @@ export class AccountStore {
         this.rootStore = rootStore;
     }
 
+    init() {}
+
+    destroy() {}
+
     clearAccounts() {
         this.accounts = [];
         this.loading = true;
