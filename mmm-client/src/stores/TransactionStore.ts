@@ -37,16 +37,18 @@ export class TransactionStore {
     }
 
     setTransactions(transactions: Array<Transaction>) {
+        // Sort in reverse order of date
         transactions.sort((a, b) => {
             const dateA = a.txnDate;
             const dateB = b.txnDate;
             if (dateA < dateB) {
-                return -1;
-            }
-            if (dateA > dateB) {
                 return 1;
             }
-            return 0;
+            if (dateA > dateB) {
+                return -1;
+            }
+            // If dates are same, then reverse sort by transaction id
+            return a.id < b.id ? 1 : -1;
         });
         this.transactions = transactions;
         this.loading = false;
