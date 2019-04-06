@@ -1,4 +1,4 @@
-import { action, decorate, observable, observe } from 'mobx';
+import { action, decorate, observable, reaction } from 'mobx';
 import { Transaction } from '../models';
 import { TransactionService } from '../services';
 import { RootStore } from './RootStore';
@@ -17,12 +17,11 @@ export class TransactionStore {
     init() {
         const { accountStore } = this.rootStore;
 
-        // observe selectedAccountId
-        this.selectedAccountDisposer = observe(
-            accountStore,
-            'selectedAccountId',
-            () => {
-                this.fetchTransactions(accountStore.selectedAccountId);
+        // react to selectedAccountId changes
+        this.selectedAccountDisposer = reaction(
+            () => accountStore.selectedAccountId,
+            selectedAccountId => {
+                this.fetchTransactions(selectedAccountId);
             }
         );
     }
