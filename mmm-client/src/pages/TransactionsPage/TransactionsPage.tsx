@@ -24,9 +24,9 @@ export const TransactionsPage = () => {
         <FullHeightContainer>
             <Header />
             <FlexRow>
-                <FlexColumn className={classes.lhs}>
+                <div className={classes.lhs}>
                     <AccountsPanel />
-                </FlexColumn>
+                </div>
                 <FlexColumn>
                     <TransactionsPanel />
                 </FlexColumn>
