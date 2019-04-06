@@ -12,6 +12,8 @@
   "dependencies": {
     "@material-ui/core": "next",
     "@material-ui/icons": "next",
+    "ag-grid-community": "^20.2.0",
+    "ag-grid-react": "^20.2.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "history": "^4.9.0",

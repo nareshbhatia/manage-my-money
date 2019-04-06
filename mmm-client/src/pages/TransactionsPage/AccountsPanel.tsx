@@ -31,7 +31,7 @@ export const AccountsPanel = observer(() => {
     return (
         <React.Fragment>
             <Title>Accounts</Title>
-            <List dense={true}>
+            <List dense={true} disablePadding={true}>
                 {accounts.map(account => (
                     <ListItem
                         className={classes.listItem}

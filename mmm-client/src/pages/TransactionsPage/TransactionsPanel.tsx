@@ -1,12 +1,19 @@
 import React, { useContext } from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/styles';
+import { ColDef } from 'ag-grid-community';
+import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
 import { Loading, Title } from '../../components';
 import { RootStoreContext } from '../../contexts';
 
+const useStyles = makeStyles({
+    gridContainer: {
+        height: 500
+    }
+});
+
 export const TransactionsPanel = observer(() => {
+    const classes = useStyles();
     const rootStore = useContext(RootStoreContext);
     const { transactionStore } = rootStore;
 
@@ -15,17 +22,23 @@ export const TransactionsPanel = observer(() => {
     }
 
     const { transactions } = transactionStore;
+    const columnDefs: Array<ColDef> = [
+        {
+            headerName: 'Payee',
+            field: 'payee'
+        },
+        {
+            headerName: 'Amount',
+            field: 'amount'
+        }
+    ];
 
     return (
         <React.Fragment>
             <Title>Transactions</Title>
-            <List dense={true}>
-                {transactions.map(transaction => (
-                    <ListItem key={transaction.id}>
-                        <ListItemText primary={transaction.payee} />
-                    </ListItem>
-                ))}
-            </List>
+            <div className={`ag-theme-balham ${classes.gridContainer}`}>
+                <AgGridReact columnDefs={columnDefs} rowData={transactions} />
+            </div>
         </React.Fragment>
     );
 });
