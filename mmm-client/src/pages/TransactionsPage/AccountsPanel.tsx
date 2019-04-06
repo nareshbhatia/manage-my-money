@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/styles';
 import { observer } from 'mobx-react';
-import { Loading, Title } from '../../components';
+import { FlexContainer, Loading, Title } from '../../components';
 import { RootStoreContext } from '../../contexts';
 
 const useStyles = makeStyles({
@@ -31,18 +31,20 @@ export const AccountsPanel = observer(() => {
     return (
         <React.Fragment>
             <Title>Accounts</Title>
-            <List dense={true} disablePadding={true}>
-                {accounts.map(account => (
-                    <ListItem
-                        className={classes.listItem}
-                        key={account.id}
-                        selected={account.id === selectedAccountId}
-                        onClick={() => handleClick(account.id)}
-                    >
-                        <ListItemText primary={account.name} />
-                    </ListItem>
-                ))}
-            </List>
+            <FlexContainer>
+                <List dense={true} disablePadding={true}>
+                    {accounts.map(account => (
+                        <ListItem
+                            className={classes.listItem}
+                            key={account.id}
+                            selected={account.id === selectedAccountId}
+                            onClick={() => handleClick(account.id)}
+                        >
+                            <ListItemText primary={account.name} />
+                        </ListItem>
+                    ))}
+                </List>
+            </FlexContainer>
         </React.Fragment>
     );
 });

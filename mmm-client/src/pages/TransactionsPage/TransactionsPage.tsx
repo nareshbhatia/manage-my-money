@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import {
-    FlexContainer,
     FlexRow,
+    FlexColumn,
     FullHeightContainer,
     Header
 } from '../../components';
@@ -24,12 +24,12 @@ export const TransactionsPage = () => {
         <FullHeightContainer>
             <Header />
             <FlexRow>
-                <div className={classes.lhs}>
+                <FlexColumn className={classes.lhs}>
                     <AccountsPanel />
-                </div>
-                <FlexContainer>
+                </FlexColumn>
+                <FlexColumn>
                     <TransactionsPanel />
-                </FlexContainer>
+                </FlexColumn>
             </FlexRow>
         </FullHeightContainer>
     );

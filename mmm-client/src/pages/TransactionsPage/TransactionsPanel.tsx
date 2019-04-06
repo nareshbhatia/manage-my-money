@@ -1,19 +1,11 @@
 import React, { useContext } from 'react';
-import { makeStyles } from '@material-ui/styles';
 import { ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
-import { Loading, Title } from '../../components';
+import { FlexContainer, Loading, Title } from '../../components';
 import { RootStoreContext } from '../../contexts';
 
-const useStyles = makeStyles({
-    gridContainer: {
-        height: 500
-    }
-});
-
 export const TransactionsPanel = observer(() => {
-    const classes = useStyles();
     const rootStore = useContext(RootStoreContext);
     const { transactionStore } = rootStore;
 
@@ -36,9 +28,9 @@ export const TransactionsPanel = observer(() => {
     return (
         <React.Fragment>
             <Title>Transactions</Title>
-            <div className={`ag-theme-balham ${classes.gridContainer}`}>
+            <FlexContainer className="ag-theme-balham">
                 <AgGridReact columnDefs={columnDefs} rowData={transactions} />
-            </div>
+            </FlexContainer>
         </React.Fragment>
     );
 });
