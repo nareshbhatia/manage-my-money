@@ -21,7 +21,8 @@ export const AccountDetail = observer(() => {
     // Configure the grid
     const defaultColDef = {
         resizable: true,
-        filter: true
+        filter: true,
+        suppressMovable: true
     };
     const columnDefs: Array<ColDef> = [
         {
@@ -75,7 +76,7 @@ export const AccountDetail = observer(() => {
                 accountName={account ? account.name : 'Select an account'}
                 balance={transactions.length > 0 ? transactions[0].balance : 0}
             />
-            <FlexContainer className="ag-theme-balham">
+            <FlexContainer className="ag-theme-material">
                 <AgGridReact
                     suppressCellSelection={true}
                     rowSelection="single"

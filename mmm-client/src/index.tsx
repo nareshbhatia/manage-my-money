@@ -8,7 +8,7 @@ import { theme } from './theme';
 
 // Import CSS for ag-grid
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
 
 // Enable strict mode for MobX. This disallows state changes outside of an action
 configure({ enforceActions: 'observed' });
