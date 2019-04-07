@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 export interface TypographyProps {
     className?: string;
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
 /**
@@ -21,12 +22,13 @@ export interface TypographyProps {
  */
 export const Title: React.FC<TypographyProps> = ({
     className: classNameProp,
+    variant = 'h6',
     children
 }) => {
     const classes = useStyles();
     const className = classNames(classes.title, classNameProp);
     return (
-        <Typography className={className} variant="h6">
+        <Typography className={className} variant={variant}>
             {children}
         </Typography>
     );

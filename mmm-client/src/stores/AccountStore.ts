@@ -1,4 +1,4 @@
-import { action, decorate, observable } from 'mobx';
+import { action, computed, decorate, observable } from 'mobx';
 import { Account } from '../models';
 import { AccountService } from '../services';
 import { RootStore } from './RootStore';
@@ -43,6 +43,12 @@ export class AccountStore {
         this.selectedAccountId = accountId;
     }
 
+    get selectedAccount() {
+        return this.accounts.find(
+            account => account.id === this.selectedAccountId
+        );
+    }
+
     async fetchAccounts() {
         this.clearAccounts();
         const data = await AccountService.getAccounts();
@@ -54,6 +60,7 @@ decorate(AccountStore, {
     loading: observable,
     accounts: observable.shallow,
     selectedAccountId: observable,
+    selectedAccount: computed,
     clearAccounts: action,
     setAccounts: action,
     setSelectedAccountId: action

@@ -9,12 +9,13 @@ import { RootStoreContext } from '../../contexts';
 
 export const TransactionsPanel = observer(() => {
     const rootStore = useContext(RootStoreContext);
-    const { transactionStore } = rootStore;
+    const { accountStore, transactionStore } = rootStore;
 
     if (transactionStore.loading) {
         return <Loading />;
     }
 
+    const { selectedAccount } = accountStore;
     const { transactions } = transactionStore;
 
     // Configure the grid
@@ -70,7 +71,9 @@ export const TransactionsPanel = observer(() => {
 
     return (
         <React.Fragment>
-            <Title>Transactions</Title>
+            <Title variant="h4">
+                {selectedAccount ? selectedAccount.name : 'Select an account'}
+            </Title>
             <FlexContainer className="ag-theme-balham">
                 <AgGridReact
                     suppressCellSelection={true}
