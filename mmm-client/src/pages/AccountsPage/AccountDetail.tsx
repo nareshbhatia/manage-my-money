@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ColDef, AgGridEvent } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
@@ -94,20 +94,10 @@ interface DateRendererProps {
     value: Date;
 }
 
-class DateRenderer extends Component<DateRendererProps> {
-    render() {
-        const { value } = this.props;
-        return formatDate(value);
-    }
-}
+const DateRenderer = ({ value }: DateRendererProps) => formatDate(value);
 
 interface MoneyRendererProps {
     value: number;
 }
 
-class MoneyRenderer extends Component<MoneyRendererProps> {
-    render() {
-        const { value } = this.props;
-        return formatMoney(value);
-    }
-}
+const MoneyRenderer = ({ value }: MoneyRendererProps) => formatMoney(value);
