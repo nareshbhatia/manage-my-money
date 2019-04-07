@@ -1,5 +1,5 @@
 import React, { Component, useContext } from 'react';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, AgGridEvent } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
 import moment from 'moment';
@@ -16,6 +16,8 @@ export const TransactionsPanel = observer(() => {
     }
 
     const { transactions } = transactionStore;
+
+    // Configure the grid
     const defaultColDef = {
         resizable: true,
         filter: true
@@ -57,6 +59,15 @@ export const TransactionsPanel = observer(() => {
         moneyRenderer: MoneyRenderer
     };
 
+    // Auto-size all columns onGridReady
+    const onGridReady = (params: AgGridEvent) => {
+        const allColumnIds: Array<string> = [];
+        params.columnApi.getAllColumns().forEach(column => {
+            allColumnIds.push(column.getColId());
+        });
+        params.columnApi.autoSizeColumns(allColumnIds);
+    };
+
     return (
         <React.Fragment>
             <Title>Transactions</Title>
@@ -68,6 +79,7 @@ export const TransactionsPanel = observer(() => {
                     columnDefs={columnDefs}
                     frameworkComponents={frameworkComponents}
                     rowData={transactions}
+                    onGridReady={onGridReady}
                 />
             </FlexContainer>
         </React.Fragment>
