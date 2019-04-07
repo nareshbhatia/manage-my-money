@@ -2,10 +2,10 @@ import React, { Component, useContext } from 'react';
 import { ColDef, AgGridEvent } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
-import moment from 'moment';
-import numeral from 'numeral';
-import { FlexContainer, Loading, Title } from '../../components';
+import { FlexContainer, Loading } from '../../components';
 import { RootStoreContext } from '../../contexts';
+import { formatDate, formatMoney } from '../../utils';
+import { AccountHeader } from './AccountHeader';
 
 export const AccountDetail = observer(() => {
     const rootStore = useContext(RootStoreContext);
@@ -15,7 +15,7 @@ export const AccountDetail = observer(() => {
         return <Loading />;
     }
 
-    const { selectedAccount } = accountStore;
+    const { selectedAccount: account } = accountStore;
     const { transactions } = transactionStore;
 
     // Configure the grid
@@ -71,9 +71,10 @@ export const AccountDetail = observer(() => {
 
     return (
         <React.Fragment>
-            <Title variant="h4">
-                {selectedAccount ? selectedAccount.name : 'Select an account'}
-            </Title>
+            <AccountHeader
+                accountName={account ? account.name : 'Select an account'}
+                balance={transactions.length > 0 ? transactions[0].balance : 0}
+            />
             <FlexContainer className="ag-theme-balham">
                 <AgGridReact
                     suppressCellSelection={true}
@@ -96,9 +97,7 @@ interface DateRendererProps {
 class DateRenderer extends Component<DateRendererProps> {
     render() {
         const { value } = this.props;
-        return moment(value)
-            .utc()
-            .format('L');
+        return formatDate(value);
     }
 }
 
@@ -109,6 +108,6 @@ interface MoneyRendererProps {
 class MoneyRenderer extends Component<MoneyRendererProps> {
     render() {
         const { value } = this.props;
-        return numeral(value).format('0,0.00');
+        return formatMoney(value);
     }
 }
