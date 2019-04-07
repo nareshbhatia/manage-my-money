@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     }
 });
 
-export const AccountsPanel = observer(() => {
+export const AccountList = observer(() => {
     const classes = useStyles();
     const rootStore = useContext(RootStoreContext);
     const { accountStore } = rootStore;

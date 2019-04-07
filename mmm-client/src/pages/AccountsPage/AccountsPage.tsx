@@ -7,8 +7,8 @@ import {
     FullHeightContainer,
     Header
 } from '../../components';
-import { AccountsPanel } from './AccountsPanel';
-import { TransactionsPanel } from './TransactionsPanel';
+import { AccountList } from './AccountList';
+import { AccountDetail } from './AccountDetail';
 
 const useStyles = makeStyles(theme => ({
     lhs: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const TransactionsPage = () => {
+export const AccountsPage = () => {
     const classes = useStyles();
 
     return (
@@ -25,10 +25,10 @@ export const TransactionsPage = () => {
             <Header />
             <FlexRow>
                 <div className={classes.lhs}>
-                    <AccountsPanel />
+                    <AccountList />
                 </div>
                 <FlexColumn>
-                    <TransactionsPanel />
+                    <AccountDetail />
                 </FlexColumn>
             </FlexRow>
         </FullHeightContainer>

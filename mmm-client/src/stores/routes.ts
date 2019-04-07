@@ -9,7 +9,7 @@ import { RouterState, RouterStore } from 'mobx-state-router';
 
 export const routes = [
     {
-        name: 'transactions',
+        name: 'accounts',
         pattern: '/',
         onEnter: (
             fromState: RouterState,

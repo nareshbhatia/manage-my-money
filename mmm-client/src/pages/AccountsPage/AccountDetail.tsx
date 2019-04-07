@@ -7,7 +7,7 @@ import numeral from 'numeral';
 import { FlexContainer, Loading, Title } from '../../components';
 import { RootStoreContext } from '../../contexts';
 
-export const TransactionsPanel = observer(() => {
+export const AccountDetail = observer(() => {
     const rootStore = useContext(RootStoreContext);
     const { accountStore, transactionStore } = rootStore;
 

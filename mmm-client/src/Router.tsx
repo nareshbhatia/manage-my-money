@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { RouterView } from 'mobx-state-router';
 import { RootStoreContext } from './contexts';
-import { NotFoundPage, TransactionsPage } from './pages';
+import { AccountsPage, NotFoundPage } from './pages';
 
 // Create a viewMap for the RouterView
 const viewMap = {
-    notFound: <NotFoundPage />,
-    transactions: <TransactionsPage />
+    accounts: <AccountsPage />,
+    notFound: <NotFoundPage />
 };
 
 export const Router = () => {
