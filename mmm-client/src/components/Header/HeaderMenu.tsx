@@ -33,7 +33,7 @@ export const HeaderMenu = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>New Account</MenuItem>
+                <MenuItem onClick={handleClose}>Manage Accounts</MenuItem>
                 <MenuItem onClick={handleClose}>Manage Categories</MenuItem>
             </Menu>
         </Fragment>
