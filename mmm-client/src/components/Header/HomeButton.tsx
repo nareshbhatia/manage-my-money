@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Apps from '@material-ui/icons/Apps';
 import { makeStyles } from '@material-ui/styles';
-import { RouterState } from 'mobx-state-router';
 import { RootStoreContext } from '../../contexts';
 
 const useStyles = makeStyles({
@@ -17,7 +16,7 @@ export const HomeButton = () => {
     const { routerStore } = rootStore;
 
     const handleClick = () => {
-        routerStore.goTo(new RouterState('accounts'));
+        routerStore.goTo('home');
     };
 
     return (

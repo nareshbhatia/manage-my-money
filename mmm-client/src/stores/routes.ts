@@ -9,16 +9,44 @@ import { RouterState, RouterStore } from 'mobx-state-router';
 
 export const routes = [
     {
-        name: 'accounts',
+        name: 'home',
         pattern: '/',
+        beforeEnter: (
+            fromState: RouterState,
+            toState: RouterState,
+            routerStore: RouterStore
+        ) => {
+            const { accountStore } = routerStore.rootStore;
+            return accountStore.fetchAccounts().then(() => {
+                const { accounts } = accountStore;
+                const accountId = accounts.length > 0 ? accounts[0].id : 0;
+                return Promise.reject(
+                    new RouterState('accounts', {
+                        accountId: accountId.toString()
+                    })
+                );
+            });
+        }
+    },
+    {
+        name: 'accounts',
+        pattern: '/accounts/:accountId',
         onEnter: (
             fromState: RouterState,
             toState: RouterState,
             routerStore: RouterStore
         ) => {
             const { accountStore } = routerStore.rootStore;
-            accountStore.fetchAccounts(); // fire and forget
-            return Promise.resolve(); // move on
+            const { accountId } = toState.params;
+
+            // fire and forget
+            accountStore.fetchAccounts();
+
+            // this will trigger the fetch of transactions
+            accountStore.setSelectedAccountId(parseInt(accountId, 10));
+
+            // move on
+            return Promise.resolve();
         }
     },
     { name: 'notFound', pattern: '/not-found' }

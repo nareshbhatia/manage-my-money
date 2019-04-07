@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 export const AccountList = observer(() => {
     const classes = useStyles();
     const rootStore = useContext(RootStoreContext);
-    const { accountStore } = rootStore;
+    const { accountStore, routerStore } = rootStore;
 
     if (accountStore.loading) {
         return <Loading />;
@@ -25,7 +25,7 @@ export const AccountList = observer(() => {
     const { accounts, selectedAccountId } = accountStore;
 
     const handleClick = (accountId: number) => {
-        accountStore.setSelectedAccountId(accountId);
+        routerStore.goTo('accounts', { accountId: accountId.toString() });
     };
 
     return (

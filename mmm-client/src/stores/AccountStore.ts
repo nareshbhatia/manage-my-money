@@ -5,7 +5,7 @@ import { RootStore } from './RootStore';
 
 export class AccountStore {
     rootStore: RootStore;
-    loading = true;
+    loading = false;
     accounts: Array<Account> = [];
     selectedAccountId = 0;
 
@@ -35,7 +35,6 @@ export class AccountStore {
             return 0;
         });
         this.accounts = accounts;
-        this.selectedAccountId = accounts.length > 0 ? accounts[0].id : 0;
         this.loading = false;
     }
 
@@ -50,9 +49,15 @@ export class AccountStore {
     }
 
     async fetchAccounts() {
+        // if accounts have been cached, don't fetch again
+        if (this.accounts.length > 0) {
+            return true;
+        }
+
         this.clearAccounts();
         const data = await AccountService.getAccounts();
         this.setAccounts(data);
+        return true;
     }
 }
 
