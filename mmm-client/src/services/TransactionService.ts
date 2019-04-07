@@ -2,10 +2,18 @@ import axios from 'axios';
 
 const api = process.env.REACT_APP_API_URL;
 
-function getTransactionsForAccount(accountId: number) {
-    return axios
-        .get(`${api}/transactions?account=${accountId}`)
-        .then(resp => resp.data);
+async function getTransactionsForAccount(accountId: number) {
+    const resp = await axios.get(`${api}/transactions?account=${accountId}`);
+    const data = resp.data;
+
+    // Convert to application domain and return
+    return data.map((txn: any) => {
+        const { txnDate, ...rest } = txn;
+        return {
+            txnDate: new Date(txnDate),
+            ...rest
+        };
+    });
 }
 
 // function getTransaction(id) {

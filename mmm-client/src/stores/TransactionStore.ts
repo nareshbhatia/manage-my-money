@@ -36,21 +36,31 @@ export class TransactionStore {
     }
 
     setTransactions(transactions: Array<Transaction>) {
-        // Sort in reverse order of date
         transactions.sort((a, b) => {
             const dateA = a.txnDate;
             const dateB = b.txnDate;
             if (dateA < dateB) {
-                return 1;
-            }
-            if (dateA > dateB) {
                 return -1;
             }
-            // If dates are same, then reverse sort by transaction id
-            return a.id < b.id ? 1 : -1;
+            if (dateA > dateB) {
+                return 1;
+            }
+            // If dates are same, then sort by transaction id
+            return a.id < b.id ? -1 : 1;
         });
-        this.transactions = transactions;
+        this.calculateBalances(transactions);
+
+        // Save in reverse order
+        this.transactions = transactions.reverse();
         this.loading = false;
+    }
+
+    calculateBalances(transactions: Array<Transaction>) {
+        let balance = 0;
+        transactions.forEach(transaction => {
+            balance = balance + transaction.amount;
+            transaction.balance = balance;
+        });
     }
 
     async fetchTransactions(accountId: number) {

@@ -3,10 +3,11 @@ import { Category } from './Category';
 
 export interface Transaction {
     id: number;
-    txnDate: string;
+    txnDate: Date;
     payee: string;
     memo: string;
     amount: number;
     account: Account;
     category: Category;
+    balance: number;
 }
