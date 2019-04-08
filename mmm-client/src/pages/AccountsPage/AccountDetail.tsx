@@ -18,7 +18,13 @@ export const AccountDetail = observer(() => {
     const { selectedAccount: account } = accountStore;
     const { transactions } = transactionStore;
 
-    // Configure the grid
+    // ----- Configure the grid -----
+
+    // Override ag-grid material theme settings
+    const gridSize = 6; // default is 8
+    const rowHeight = gridSize * 6;
+    const headerHeight = gridSize * 7;
+
     const defaultColDef = {
         resizable: true,
         filter: true,
@@ -80,6 +86,9 @@ export const AccountDetail = observer(() => {
                 <AgGridReact
                     suppressCellSelection={true}
                     rowSelection="single"
+                    headerHeight={headerHeight}
+                    floatingFiltersHeight={headerHeight}
+                    rowHeight={rowHeight}
                     defaultColDef={defaultColDef}
                     columnDefs={columnDefs}
                     frameworkComponents={frameworkComponents}

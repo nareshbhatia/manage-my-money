@@ -1,0 +1,11 @@
+$ag-icons-path: '~ag-grid-community/src/styles/ag-theme-material/icons/';
+
+$grid-size: 6px; // 8 by default
+$icon-size: 12px; // 18 by default
+
+// Change the primary / accent colors
+$ag-mat-primary: #1277eb;
+$ag-mat-accent: #fbc02d;
+
+@import '~ag-grid-community/src/styles/ag-grid.scss';
+@import '~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss';

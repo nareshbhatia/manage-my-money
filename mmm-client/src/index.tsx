@@ -6,9 +6,7 @@ import { configure } from 'mobx';
 import { App } from './App';
 import { theme } from './theme';
 
-// Import CSS for ag-grid
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-material.css';
+import './index.scss';
 
 // Enable strict mode for MobX. This disallows state changes outside of an action
 configure({ enforceActions: 'observed' });

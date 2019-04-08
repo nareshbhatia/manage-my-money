@@ -33,6 +33,7 @@
     "@types/numeral": "0.0.25",
     "@types/react": "16.8.10",
     "@types/react-dom": "16.8.3",
+    "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
     "react-scripts": "2.1.8",
     "typescript": "3.4.1"
