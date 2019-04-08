@@ -1,10 +1,13 @@
-import React, { Fragment, MouseEvent, useState } from 'react';
+import React, { Fragment, MouseEvent, useContext, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { RootStoreContext } from '../../contexts';
 
 export const HeaderMenu = () => {
+    const rootStore = useContext(RootStoreContext);
+    const { routerStore } = rootStore;
     const [anchorEl, setAnchorEl] = useState<any>();
     const [open, setOpen] = useState(false);
 
@@ -15,6 +18,14 @@ export const HeaderMenu = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleManageAccounts = () => {
+        routerStore.goTo('manageAccounts');
+    };
+
+    const handleManageCategories = () => {
+        routerStore.goTo('manageCategories');
     };
 
     return (
@@ -33,8 +44,12 @@ export const HeaderMenu = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Manage Accounts</MenuItem>
-                <MenuItem onClick={handleClose}>Manage Categories</MenuItem>
+                <MenuItem onClick={handleManageAccounts}>
+                    Manage Accounts
+                </MenuItem>
+                <MenuItem onClick={handleManageCategories}>
+                    Manage Categories
+                </MenuItem>
             </Menu>
         </Fragment>
     );

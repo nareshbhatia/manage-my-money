@@ -49,5 +49,17 @@ export const routes = [
             return Promise.resolve();
         }
     },
+    {
+        name: 'analyze',
+        pattern: '/analyze'
+    },
+    {
+        name: 'manageAccounts',
+        pattern: '/manage-accounts'
+    },
+    {
+        name: 'manageCategories',
+        pattern: '/manage-categories'
+    },
     { name: 'notFound', pattern: '/not-found' }
 ];

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
-import { RouterState } from 'mobx-state-router';
 import { RootStoreContext } from '../../contexts';
 
 export const AnalyzeButton = () => {
@@ -8,7 +7,7 @@ export const AnalyzeButton = () => {
     const { routerStore } = rootStore;
 
     const handleClick = () => {
-        routerStore.goTo(new RouterState('analyze'));
+        routerStore.goTo('analyze');
     };
 
     return (
