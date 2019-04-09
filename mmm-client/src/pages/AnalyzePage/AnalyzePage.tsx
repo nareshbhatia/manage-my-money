@@ -15,6 +15,7 @@ import { ChartHeader } from './ChartHeader';
 import { FullHeightContainer, Header, Loading } from '../../components';
 
 export const AnalyzePage = () => {
+    const [timePeriod, setTimePeriod] = useState('thisMonth');
     const [loading, setLoading] = useState(true);
     const [summaries, setSummaries] = useState<
         Array<TransactionSummaryByCategory>
@@ -41,7 +42,13 @@ export const AnalyzePage = () => {
         }
 
         fetchData();
-    }, []);
+    }, [timePeriod]);
+
+    const handleTimePeriodChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        setTimePeriod(event.target.value);
+    };
 
     if (loading) {
         return <Loading />;
@@ -63,7 +70,11 @@ export const AnalyzePage = () => {
     return (
         <FullHeightContainer>
             <Header />
-            <ChartHeader netIncome={netIncome} />
+            <ChartHeader
+                netIncome={netIncome}
+                timePeriod={timePeriod}
+                onTimePeriodChange={handleTimePeriodChange}
+            />
             <ResponsiveContainer>
                 <BarChart
                     data={data}
