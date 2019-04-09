@@ -12,38 +12,40 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         padding: theme.spacing(2),
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     rhs: {
         padding: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-end'
     }
 }));
 
-export interface AccountHeaderProps {
-    accountName: string;
-    balance: number;
+export interface ChartHeaderProps {
+    netIncome: number;
 }
 
-export const AccountHeader = ({ accountName, balance }: AccountHeaderProps) => {
+export const ChartHeader = ({ netIncome }: ChartHeaderProps) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <div className={classes.lhs}>
-                <Typography component="h1" variant="h4">
-                    {accountName}
+                <Typography component="h1" variant="h5">
+                    Transactions by Category
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                    From 1/01/2015 to 12/31/2015
                 </Typography>
             </div>
             <div className={classes.rhs}>
-                <Typography variant="caption" color="textSecondary">
-                    Today's Balance
-                </Typography>
                 <Typography component="h2" variant="h5">
-                    {numberToMoney(balance)}
+                    {numberToMoney(netIncome)}
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                    Net Income
                 </Typography>
             </div>
         </div>

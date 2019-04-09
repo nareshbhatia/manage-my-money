@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
 import { FlexContainer, Loading } from '../../components';
 import { RootStoreContext } from '../../contexts';
-import { formatDate, formatMoney } from '../../utils';
+import { dateToString, numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
 
 export const AccountDetail = observer(() => {
@@ -104,10 +104,10 @@ interface DateRendererProps {
     value: Date;
 }
 
-const DateRenderer = ({ value }: DateRendererProps) => formatDate(value);
+const DateRenderer = ({ value }: DateRendererProps) => dateToString(value);
 
 interface MoneyRendererProps {
     value: number;
 }
 
-const MoneyRenderer = ({ value }: MoneyRendererProps) => formatMoney(value);
+const MoneyRenderer = ({ value }: MoneyRendererProps) => numberToMoney(value);

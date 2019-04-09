@@ -11,3 +11,9 @@ export interface Transaction {
     category: Category;
     balance: number;
 }
+
+export interface TransactionSummaryByCategory {
+    catId: number;
+    catName: string;
+    amount: number;
+}

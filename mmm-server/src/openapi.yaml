@@ -401,7 +401,7 @@ components:
           type: string
           example: Transport
         amount:
-          type: string
+          type: number
           description: Positive for income, negative for expense
           example: -55.74
 
