@@ -8,14 +8,15 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
-import { TransactionSummaryByCategory } from '../../models';
+import { TimePeriods, TransactionSummaryByCategory } from '../../models';
 import { TransactionService } from '../../services';
+import { getDateRange } from '../../utils';
 import { ChartHeader } from './ChartHeader';
 
 import { FullHeightContainer, Header, Loading } from '../../components';
 
 export const AnalyzePage = () => {
-    const [timePeriod, setTimePeriod] = useState('thisMonth');
+    const [timePeriod, setTimePeriod] = useState(TimePeriods.thisMonth.id);
     const [loading, setLoading] = useState(true);
     const [summaries, setSummaries] = useState<
         Array<TransactionSummaryByCategory>
@@ -24,7 +25,8 @@ export const AnalyzePage = () => {
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            const summaries = await TransactionService.getTransactionsByCategory();
+            const { startDate, endDate } = getDateRange(timePeriod);
+            const summaries = await TransactionService.getTransactionsByCategory(startDate, endDate);
 
             // Separate the positive and negative values, drop the zeros
             const positives = summaries.filter(summary => summary.amount > 0);

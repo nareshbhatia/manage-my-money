@@ -59,7 +59,7 @@ export const ChartHeader = ({
                     >
                         {Object.keys(TimePeriods).map(key => (
                             <MenuItem key={key} value={key}>
-                                {TimePeriods[key]}
+                                {TimePeriods[key].name}
                             </MenuItem>
                         ))}
                     </Select>
