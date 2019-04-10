@@ -23,6 +23,12 @@ export function dateToISOString(date: Date) {
         .format('YYYY-MM-DD');
 }
 
+/**
+ * Returns start and end dates based on the specified time period
+ * Example: Assume today is 2019-04-15, then timePeriod = thisMonth returns
+ * 2019-04-01T00:00:00.000Z --> 2019-04-30T00:00:00.000Z
+ * @param timePeriod
+ */
 export function getDateRange(timePeriod: string) {
     let startDate;
     let endDate;

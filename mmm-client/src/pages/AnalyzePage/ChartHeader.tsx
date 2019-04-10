@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import { TimePeriods } from '../../models';
-import { numberToMoney } from '../../utils';
+import { dateToString, getDateRange, numberToMoney } from '../../utils';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     formControl: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
-        width: 190
+        width: 150
     }
 }));
 
@@ -43,6 +43,12 @@ export const ChartHeader = ({
     onTimePeriodChange
 }: ChartHeaderProps) => {
     const classes = useStyles();
+    const { startDate, endDate } = getDateRange(timePeriod);
+    const dateRange =
+        startDate && endDate
+            ? `${dateToString(startDate)} - ${dateToString(endDate)}`
+            : '';
+
     return (
         <div className={classes.root}>
             <div className={classes.lhs}>
@@ -65,7 +71,7 @@ export const ChartHeader = ({
                     </Select>
                 </FormControl>
                 <Typography variant="caption" color="textSecondary">
-                    From 12/31/2017 to 12/31/2018
+                    {dateRange}
                 </Typography>
             </div>
             <div className={classes.rhs}>

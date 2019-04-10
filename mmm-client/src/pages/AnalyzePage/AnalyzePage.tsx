@@ -26,7 +26,10 @@ export const AnalyzePage = () => {
         async function fetchData() {
             setLoading(true);
             const { startDate, endDate } = getDateRange(timePeriod);
-            const summaries = await TransactionService.getTransactionsByCategory(startDate, endDate);
+            const summaries = await TransactionService.getTransactionsByCategory(
+                startDate,
+                endDate
+            );
 
             // Separate the positive and negative values, drop the zeros
             const positives = summaries.filter(summary => summary.amount > 0);
