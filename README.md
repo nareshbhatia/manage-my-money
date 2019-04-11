@@ -15,7 +15,9 @@ Manage My Money is a personal finance manager that allows you to record and
 analyze your income and expenses. Here are a few screenshots to give you an
 idea:
 
-![Screen Shot](assets/dashboard.png)
+![Accounts](assets/accounts.png)
+
+![Analyze](assets/analyze.png)
 
 ## Domain Concepts
 

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { MouseEventHandler, useContext } from 'react';
 import { ColDef, AgGridEvent } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
-import { FlexContainer, Loading } from '../../components';
+import { FlexContainer, FloatingAddButton, Loading } from '../../components';
 import { RootStoreContext } from '../../contexts';
 import { dateToString, numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
@@ -76,6 +76,10 @@ export const AccountDetail = observer(() => {
         params.columnApi.autoSizeColumns(allColumnIds);
     };
 
+    const handleCreateTransaction: MouseEventHandler = () => {
+        console.log('handleCreateTransaction');
+    };
+
     return (
         <React.Fragment>
             <AccountHeader
@@ -95,6 +99,7 @@ export const AccountDetail = observer(() => {
                     rowData={transactions}
                     onGridReady={onGridReady}
                 />
+                <FloatingAddButton onClick={handleCreateTransaction} />
             </FlexContainer>
         </React.Fragment>
     );
