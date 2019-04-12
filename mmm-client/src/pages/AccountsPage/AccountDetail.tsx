@@ -1,15 +1,21 @@
-import React, { MouseEventHandler, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ColDef, AgGridEvent } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { observer } from 'mobx-react';
 import { FlexContainer, FloatingAddButton, Loading } from '../../components';
 import { RootStoreContext } from '../../contexts';
+import { TransactionInput } from '../../models';
 import { dateToString, numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
+import { TxnDialog } from './TxnDialog';
 
 export const AccountDetail = observer(() => {
     const rootStore = useContext(RootStoreContext);
     const { accountStore, transactionStore } = rootStore;
+
+    const [showTxnDialog, setShowTxnDialog] = useState(false);
+    const [isNewTxn, setNewTxn] = useState(true);
+    const [editedTxn, setEditedTxn] = useState<TransactionInput>();
 
     if (transactionStore.loading) {
         return <Loading />;
@@ -76,8 +82,36 @@ export const AccountDetail = observer(() => {
         params.columnApi.autoSizeColumns(allColumnIds);
     };
 
-    const handleCreateTransaction: MouseEventHandler = () => {
-        console.log('handleCreateTransaction');
+    const handleCreateTransaction = () => {
+        setShowTxnDialog(true);
+        setNewTxn(true);
+        setEditedTxn({
+            // TODO: Set Date using UTC
+            txnDate: new Date(),
+            payee: '',
+            memo: '',
+            amount: 0,
+            accountId: account ? account.id : 0,
+            categoryId: 0
+        });
+    };
+
+    const handleEditTransaction = () => {
+        setShowTxnDialog(true);
+        setNewTxn(false);
+        // TODO: Set to the double-clicked transaction
+        // setEditedTxn(newTxn);
+    };
+
+    const handleTxnDialogSave = (txn: TransactionInput) => {
+        isNewTxn
+            ? transactionStore.createTransaction(txn)
+            : transactionStore.updateTransaction(txn);
+        setShowTxnDialog(false);
+    };
+
+    const handleTxnDialogCancel = () => {
+        setShowTxnDialog(false);
     };
 
     return (
@@ -86,6 +120,7 @@ export const AccountDetail = observer(() => {
                 accountName={account ? account.name : 'Select an account'}
                 balance={transactions.length > 0 ? transactions[0].balance : 0}
             />
+
             <FlexContainer className="ag-theme-material">
                 <AgGridReact
                     suppressCellSelection={true}
@@ -101,6 +136,14 @@ export const AccountDetail = observer(() => {
                 />
                 <FloatingAddButton onClick={handleCreateTransaction} />
             </FlexContainer>
+
+            {showTxnDialog && editedTxn && (
+                <TxnDialog
+                    txn={editedTxn}
+                    onSave={handleTxnDialogSave}
+                    onCancel={handleTxnDialogCancel}
+                />
+            )}
         </React.Fragment>
     );
 });

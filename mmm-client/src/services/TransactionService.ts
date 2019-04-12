@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { Transaction, TransactionSummaryByCategory } from '../models';
+import {
+    Transaction,
+    TransactionInput,
+    TransactionSummaryByCategory
+} from '../models';
 import { dateToISOString } from '../utils';
 
 const api = process.env.REACT_APP_API_URL;
@@ -40,10 +44,21 @@ async function getTransactionsByCategory(
 
 // function getTransaction(id) {
 // }
-//
-// function createTransaction(transaction) {
-// }
-//
+
+async function createTransaction(txn: TransactionInput) {
+    const { txnDate, ...rest } = txn;
+    const jsTxn = {
+        txnDate: dateToISOString(txnDate),
+        ...rest
+    };
+    try {
+        const resp = await axios.post(`${api}/transactions`, jsTxn);
+        return resp.data;
+    } catch (e) {
+        throw e;
+    }
+}
+
 // function updateTransaction(transaction) {
 // }
 //
@@ -52,9 +67,9 @@ async function getTransactionsByCategory(
 
 export const TransactionService = {
     getTransactionsForAccount,
-    getTransactionsByCategory
+    getTransactionsByCategory,
     // getAccount,
-    // createAccount,
+    createTransaction
     // updateAccount,
     // deleteAccount
 };

@@ -1,5 +1,5 @@
 import { action, decorate, observable, reaction } from 'mobx';
-import { Transaction } from '../models';
+import { Transaction, TransactionInput } from '../models';
 import { TransactionService } from '../services';
 import { RootStore } from './RootStore';
 
@@ -69,6 +69,15 @@ export class TransactionStore {
             accountId
         );
         this.setTransactions(data);
+    }
+
+    async createTransaction(txn: TransactionInput) {
+        const data = await TransactionService.createTransaction(txn);
+        return data;
+    }
+
+    async updateTransaction(txn: TransactionInput) {
+        return;
     }
 }
 

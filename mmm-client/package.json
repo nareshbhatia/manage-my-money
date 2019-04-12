@@ -16,6 +16,7 @@
     "ag-grid-react": "^20.2.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "formik": "1.5.2",
     "history": "^4.9.0",
     "mobx": "^5.9.4",
     "mobx-react": "beta",
@@ -24,7 +25,8 @@
     "numeral": "^2.0.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "recharts": "^1.5.0"
+    "recharts": "^1.5.0",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
@@ -35,6 +37,7 @@
     "@types/react": "16.8.10",
     "@types/react-dom": "16.8.3",
     "@types/recharts": "^1.1.16",
+    "@types/yup": "^0.26.12",
     "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
     "react-scripts": "2.1.8",

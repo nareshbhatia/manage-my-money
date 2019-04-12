@@ -12,6 +12,16 @@ export interface Transaction {
     balance: number;
 }
 
+export interface TransactionInput {
+    id?: number;
+    txnDate: Date;
+    payee: string;
+    memo: string;
+    amount: number;
+    accountId: number;
+    categoryId: number;
+}
+
 export interface TransactionSummaryByCategory {
     catId: number;
     catName: string;
