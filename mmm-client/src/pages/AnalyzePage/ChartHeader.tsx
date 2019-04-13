@@ -1,12 +1,11 @@
 import React from 'react';
-
+import { LocalDate } from 'js-joda';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
-import { TimePeriods } from '../../models';
-import { dateToString, getDateRange, numberToMoney } from '../../utils';
+import { getDateRange, numberToMoney, TimePeriods } from '../../utils';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,10 +42,10 @@ export const ChartHeader = ({
     onTimePeriodChange
 }: ChartHeaderProps) => {
     const classes = useStyles();
-    const { startDate, endDate } = getDateRange(timePeriod);
+    const { startDate, endDate } = getDateRange(LocalDate.now(), timePeriod);
     const dateRange =
         startDate && endDate
-            ? `${dateToString(startDate)} - ${dateToString(endDate)}`
+            ? `${startDate.toString()} - ${endDate.toString()}`
             : '';
 
     return (

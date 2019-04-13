@@ -26,7 +26,7 @@ ALTER TABLE categories
 
 CREATE TABLE transactions (
   id SERIAL PRIMARY KEY,
-  txn_date TIMESTAMPTZ NOT NULL,
+  txn_date DATE NOT NULL,
   payee VARCHAR(64) NOT NULL,
   memo VARCHAR(128),
   amount DECIMAL(19, 4) NOT NULL

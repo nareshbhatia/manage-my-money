@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { LocalDate, ZonedDateTime } from 'js-joda';
 import {
     Transaction,
     TransactionInput,
     TransactionSummaryByCategory
 } from '../models';
-import { dateToISOString } from '../utils';
 
 const api = process.env.REACT_APP_API_URL;
 
@@ -22,21 +22,21 @@ async function getTransactionsForAccount(
     return data.map((txn: any) => {
         const { txnDate, ...rest } = txn;
         return {
-            txnDate: new Date(txnDate),
+            txnDate: ZonedDateTime.parse(txnDate),
             ...rest
         };
     });
 }
 
 async function getTransactionsByCategory(
-    startDate?: Date,
-    endDate?: Date
+    startDate?: LocalDate,
+    endDate?: LocalDate
 ): Promise<Array<TransactionSummaryByCategory>> {
     const resp = await axios.get(`${api}/transactions`, {
         params: {
             groupByCategory: true,
-            startDate: startDate ? dateToISOString(startDate) : undefined,
-            endDate: endDate ? dateToISOString(endDate) : undefined
+            startDate: startDate ? startDate.toString() : undefined,
+            endDate: endDate ? endDate.toString() : undefined
         }
     });
     return resp.data;
@@ -48,7 +48,7 @@ async function getTransactionsByCategory(
 async function createTransaction(txn: TransactionInput) {
     const { txnDate, ...rest } = txn;
     const jsTxn = {
-        txnDate: dateToISOString(txnDate),
+        txnDate: txnDate.toString(),
         ...rest
     };
     try {

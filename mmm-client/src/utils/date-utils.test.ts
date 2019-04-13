@@ -1,25 +1,76 @@
-import { dateToISOString, dateToString } from './date-utils';
+import { LocalDate } from 'js-joda';
+import { getDateRange, TimePeriods } from './date-utils';
 
-describe('dateToString()', () => {
-    test('converts UTC midnight correctly, e.g. 2018-12-31T00:00:00.000Z --> 12/31/2018', () => {
-        const date = new Date('2018-12-31T00:00:00.000Z');
-        expect(dateToString(date)).toBe('12/31/2018');
+const refDate = LocalDate.parse('2019-04-15');
+
+describe('getDateRange()', () => {
+    test('thisMonth returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.thisMonth.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2019-04-01');
+        const expEndDate = LocalDate.parse('2019-04-30');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
     });
 
-    test('converts non-UTC times correctly, e.g. 2018-12-31T19:00:00-05:00 --> 01/01/2019', () => {
-        const date = new Date('2018-12-31T19:00:00-05:00');
-        expect(dateToString(date)).toBe('01/01/2019');
-    });
-});
-
-describe('dateToISOString()', () => {
-    test('converts UTC midnight correctly, e.g. 2018-12-31T00:00:00.000Z --> 2018-12-31', () => {
-        const date = new Date('2018-12-31T00:00:00.000Z');
-        expect(dateToISOString(date)).toBe('2018-12-31');
+    test('lastMonth returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.lastMonth.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2019-03-01');
+        const expEndDate = LocalDate.parse('2019-03-31');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
     });
 
-    test('converts non-UTC times correctly, e.g. 2018-12-31T19:00:00-05:00 --> 2019-01-01', () => {
-        const date = new Date('2018-12-31T19:00:00-05:00');
-        expect(dateToISOString(date)).toBe('2019-01-01');
+    test('last3Months returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.last3Months.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2019-01-01');
+        const expEndDate = LocalDate.parse('2019-03-31');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
+    });
+
+    test('last6Months returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.last6Months.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2018-10-01');
+        const expEndDate = LocalDate.parse('2019-03-31');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
+    });
+
+    test('last12Months returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.last12Months.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2018-04-01');
+        const expEndDate = LocalDate.parse('2019-03-31');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
+    });
+
+    test('thisYear returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.thisYear.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2019-01-01');
+        const expEndDate = LocalDate.parse('2019-12-31');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
+    });
+
+    test('lastYear returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.lastYear.id);
+        const { startDate, endDate } = range;
+        const expStartDate = LocalDate.parse('2018-01-01');
+        const expEndDate = LocalDate.parse('2018-12-31');
+        expect(startDate && startDate.equals(expStartDate)).toBe(true);
+        expect(endDate && endDate.equals(expEndDate)).toBe(true);
+    });
+
+    test('allTime returns the expected range', () => {
+        const range = getDateRange(refDate, TimePeriods.allTime.id);
+        const { startDate, endDate } = range;
+        expect(startDate).toBeUndefined();
+        expect(endDate).toBeUndefined();
     });
 });

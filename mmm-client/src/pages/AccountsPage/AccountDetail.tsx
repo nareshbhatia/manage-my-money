@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { ColDef, AgGridEvent } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
+import { LocalDate } from 'js-joda';
 import { observer } from 'mobx-react';
 import { FlexContainer, FloatingAddButton, Loading } from '../../components';
 import { RootStoreContext } from '../../contexts';
 import { TransactionInput } from '../../models';
-import { dateToString, numberToMoney } from '../../utils';
+import { numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
 import { TxnDialog } from './TxnDialog';
 
@@ -86,8 +87,7 @@ export const AccountDetail = observer(() => {
         setShowTxnDialog(true);
         setNewTxn(true);
         setEditedTxn({
-            // TODO: Set Date using UTC
-            txnDate: new Date(),
+            txnDate: LocalDate.now(),
             payee: '',
             memo: '',
             amount: 0,
@@ -152,7 +152,7 @@ interface DateRendererProps {
     value: Date;
 }
 
-const DateRenderer = ({ value }: DateRendererProps) => dateToString(value);
+const DateRenderer = ({ value }: DateRendererProps) => value.toString();
 
 interface MoneyRendererProps {
     value: number;

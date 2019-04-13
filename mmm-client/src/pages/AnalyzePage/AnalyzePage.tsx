@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { LocalDate } from 'js-joda';
 import {
     BarChart,
     Bar,
@@ -8,9 +9,9 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
-import { TimePeriods, TransactionSummaryByCategory } from '../../models';
+import { TransactionSummaryByCategory } from '../../models';
 import { TransactionService } from '../../services';
-import { getDateRange } from '../../utils';
+import { getDateRange, TimePeriods } from '../../utils';
 import { ChartHeader } from './ChartHeader';
 
 import { FullHeightContainer, Header, Loading } from '../../components';
@@ -25,7 +26,10 @@ export const AnalyzePage = () => {
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            const { startDate, endDate } = getDateRange(timePeriod);
+            const { startDate, endDate } = getDateRange(
+                LocalDate.now(),
+                timePeriod
+            );
             const summaries = await TransactionService.getTransactionsByCategory(
                 startDate,
                 endDate

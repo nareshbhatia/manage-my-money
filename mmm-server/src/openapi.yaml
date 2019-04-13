@@ -366,7 +366,7 @@ components:
         txnDate:
           type: string
           description: ISO 8601 format
-          example: 2013-01-01T00:00:00.000Z
+          example: 2013-01-01
         payee:
           type: string
           example: Whole Foods
@@ -422,7 +422,7 @@ components:
         txnDate:
           type: string
           description: ISO 8601 format
-          example: 2013-01-01T00:00:00.000Z
+          example: 2013-01-01
         payee:
           type: string
           example: Whole Foods
@@ -456,7 +456,7 @@ components:
         txnDate:
           type: string
           description: ISO 8601 format
-          example: 2013-01-01T00:00:00.000Z
+          example: 2013-01-01
         payee:
           type: string
           example: Whole Foods

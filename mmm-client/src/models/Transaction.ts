@@ -1,9 +1,10 @@
+import { LocalDate } from 'js-joda';
 import { Account } from './Account';
 import { Category } from './Category';
 
 export interface Transaction {
     id: number;
-    txnDate: Date;
+    txnDate: LocalDate;
     payee: string;
     memo: string;
     amount: number;
@@ -14,7 +15,7 @@ export interface Transaction {
 
 export interface TransactionInput {
     id?: number;
-    txnDate: Date;
+    txnDate: LocalDate;
     payee: string;
     memo: string;
     amount: number;
