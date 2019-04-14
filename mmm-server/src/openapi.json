@@ -549,7 +549,7 @@
             "example": "Groceries for soup kitchen"
           },
           "amount": {
-            "type": "string",
+            "type": "number",
             "description": "Positive for income, negative for expense",
             "example": -55.74
           },
@@ -584,7 +584,7 @@
             "example": "Transport"
           },
           "amount": {
-            "type": "string",
+            "type": "number",
             "description": "Positive for income, negative for expense",
             "example": -55.74
           }
@@ -620,7 +620,7 @@
             "example": "Groceries for soup kitchen"
           },
           "amount": {
-            "type": "string",
+            "type": "number",
             "description": "Positive for income, negative for expense",
             "example": -55.74
           },

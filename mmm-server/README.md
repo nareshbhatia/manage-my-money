@@ -11,8 +11,8 @@ cd mmm-server
 docker-compose up -d
 
 # Create the database schema and load data.
-# Before running these steps, you can change the startDate and endDate for
-# loading transactions by editing db/config.js
+# Before running these steps, you can change the start and end dates for
+# transactions by editing db/config.js
 npm install
 npm run create-schema
 npm run load-data
