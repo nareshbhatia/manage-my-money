@@ -11,16 +11,20 @@
         "build": "npm run lint && babel src --out-dir dist && npm run copy-to-dist",
         "serve": "node dist/server.js",
         "lint": "eslint src --ext .js",
-        "format": "prettier --write '*.{js,md}' 'src/**/*.js'",
-        "copy-to-dist": "copyfiles --up 1 src/openapi.json dist"
+        "format": "prettier --write '*.{js,md}' '{src,db}/**/*.js'",
+        "copy-to-dist": "copyfiles --up 1 src/openapi.json dist",
+        "create-schema": "babel-node db/create-schema.js",
+        "load-data": "babel-node db/load-data.js"
     },
     "dependencies": {
         "body-parser": "^1.18.3",
+        "chance": "^1.0.18",
         "cors": "^2.8.5",
         "dotenv": "^7.0.0",
         "express": "^4.16.4",
         "express-async-handler": "^1.1.4",
         "join-js": "^1.0.2",
+        "js-joda": "^1.10.1",
         "knex": "^0.16.3",
         "pg": "^7.9.0",
         "pg-parse-float": "0.0.1",

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LocalDate, ZonedDateTime } from 'js-joda';
+import { LocalDate } from 'js-joda';
 import {
     Transaction,
     TransactionInput,
@@ -22,7 +22,7 @@ async function getTransactionsForAccount(
     return data.map((txn: any) => {
         const { txnDate, ...rest } = txn;
         return {
-            txnDate: ZonedDateTime.parse(txnDate),
+            txnDate: LocalDate.parse(txnDate),
             ...rest
         };
     });

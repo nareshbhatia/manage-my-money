@@ -1,5 +1,5 @@
 import initKnex from 'knex';
-import pg, { types } from 'pg';
+import pg from 'pg';
 import pgParseFloat from 'pg-parse-float';
 
 let knex;
@@ -7,12 +7,6 @@ let knex;
 function start() {
     // Make float column types return JavaScript floats instead of strings
     pgParseFloat(pg);
-
-    // Force DATE type to return a string value
-    // See https://github.com/brianc/node-postgres/issues/1844
-    const DATE_OID = 1082;
-    const parseDate = value => value;
-    types.setTypeParser(DATE_OID, parseDate);
 
     // Initialize Knex
     const dbConfig = {

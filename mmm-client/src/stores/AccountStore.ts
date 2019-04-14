@@ -23,16 +23,9 @@ export class AccountStore {
     }
 
     setAccounts(accounts: Array<Account>) {
+        // Sort by account id
         accounts.sort((a, b) => {
-            const nameA = a.name.toLowerCase();
-            const nameB = b.name.toLowerCase();
-            if (nameA < nameB) {
-                return -1;
-            }
-            if (nameA > nameB) {
-                return 1;
-            }
-            return 0;
+            return a.id - b.id;
         });
         this.accounts = accounts;
         this.loading = false;

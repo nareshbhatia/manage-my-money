@@ -1,11 +1,22 @@
 # Manage My Money Server
 
 The server implements a RESTful API for Manage My Money. To keep things simple,
-you don't have to go through the build process. Simply deploy using Docker
-Compose:
+you don't have to go through an extensive build process. Simply deploy using
+Docker Compose and initialize the database:
 
-    cd mmm-server
-    docker-compose up -d
+```bash
+cd mmm-server
+
+# Deploy the server using docker-compose
+docker-compose up -d
+
+# Create the database schema and load data.
+# Before running these steps, you can change the startDate and endDate for
+# loading transactions by editing db/config.js
+npm install
+npm run create-schema
+npm run load-data
+```
 
 At this point, you should have a running server. Point your browser to
 [http://localhost:8080/api-docs/](http://localhost:8080/api-docs/) to see the
@@ -18,12 +29,18 @@ To stop the server:
 
 ## Dev Build
 
-Make sure that the Manage My Money database is running. See instructions under
-mmm-db.
+Make sure that you have a Postgres database running and initialized with data
 
 ```bash
-cp .env-sample .env
+docker run -d --rm --name mmm-db -p 5432:5432 -e POSTGRES_PASSWORD='docker' postgres:11-alpine
 npm install
+npm run create-schema
+npm run load-data
+```
+
+Now run the server
+
+```bash
 npm start
 ```
 

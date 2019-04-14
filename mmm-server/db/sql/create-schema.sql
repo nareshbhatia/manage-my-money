@@ -1,7 +1,7 @@
 -- Drop foreign keys
-ALTER TABLE transactions
+ALTER TABLE IF EXISTS transactions
   DROP CONSTRAINT transactions_account_id_foreign;
-ALTER TABLE transactions
+ALTER TABLE IF EXISTS transactions
   DROP CONSTRAINT transactions_category_id_foreign;
 
 -- Drop tables
@@ -29,7 +29,7 @@ CREATE TABLE transactions (
   txn_date DATE NOT NULL,
   payee VARCHAR(64) NOT NULL,
   memo VARCHAR(128),
-  amount DECIMAL(19, 4) NOT NULL
+  amount DECIMAL(19, 2) NOT NULL
 );
 
 -- Add foreign keys

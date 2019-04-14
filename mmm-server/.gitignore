@@ -16,6 +16,3 @@
 # System Files
 .DS_Store
 Thumbs.db
-
-# Don't allow checking in the environment
-.env

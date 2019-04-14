@@ -7,11 +7,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/nareshbhatia/manage-my-money.git"
-  },
-  "scripts": {
-    "format": "prettier --write README.md mmm-db/README.md"
-  },
-  "devDependencies": {
-    "prettier": "^1.16.4"
   }
 }
