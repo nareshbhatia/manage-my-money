@@ -76,7 +76,7 @@ export class TransactionStore {
 
     updateTxnInStore(updTxn: Transaction) {
         const clone = toJS(this.transactions);
-        const index = clone.findIndex((t) => t.id === updTxn.id );
+        const index = clone.findIndex(t => t.id === updTxn.id);
         if (index >= 0) {
             clone[index] = updTxn;
             this.transactions = this.processTxns(clone);

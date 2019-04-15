@@ -8,7 +8,7 @@ import { RootStoreContext } from '../../contexts';
 import { Transaction, TransactionInput } from '../../models';
 import { numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
-import { TxnDialog } from './TxnDialog';
+import { FormInput, TxnDialog } from './TxnDialog';
 
 export const AccountDetail = observer(() => {
     const rootStore = useContext(RootStoreContext);
@@ -16,7 +16,7 @@ export const AccountDetail = observer(() => {
 
     const [showTxnDialog, setShowTxnDialog] = useState(false);
     const [isNewTxn, setNewTxn] = useState(true);
-    const [editedTxn, setEditedTxn] = useState<TransactionInput>();
+    const [formInput, setFormInput] = useState<FormInput>();
 
     if (transactionStore.loading) {
         return <Loading />;
@@ -86,11 +86,11 @@ export const AccountDetail = observer(() => {
 
     const handleCreateTransaction = () => {
         setNewTxn(true);
-        setEditedTxn({
+        setFormInput({
             txnDate: LocalDate.now().toString(),
             payee: '',
             memo: '',
-            amount: 0,
+            amount: '',
             accountId: account ? account.id : 0,
             categoryId: 0
         });
@@ -101,12 +101,12 @@ export const AccountDetail = observer(() => {
     const handleCellDoubleClicked = (e: CellDoubleClickedEvent) => {
         const txn: Transaction = e.data;
         setNewTxn(false);
-        setEditedTxn({
+        setFormInput({
             id: txn.id,
             txnDate: txn.txnDate.toString(),
             payee: txn.payee,
             memo: txn.memo || '',
-            amount: txn.amount,
+            amount: numberToMoney(txn.amount),
             accountId: txn.account.id,
             categoryId: txn.category.id
         });
@@ -149,9 +149,9 @@ export const AccountDetail = observer(() => {
                 <FloatingAddButton onClick={handleCreateTransaction} />
             </FlexContainer>
 
-            {showTxnDialog && editedTxn && (
+            {showTxnDialog && formInput && (
                 <TxnDialog
-                    txn={editedTxn}
+                    formInput={formInput}
                     categories={categories}
                     onSave={handleTxnDialogSave}
                     onCancel={handleTxnDialogCancel}
