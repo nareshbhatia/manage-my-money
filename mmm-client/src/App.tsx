@@ -10,12 +10,12 @@ import { history } from './utils';
 const rootStore = new RootStore();
 rootStore.init();
 
+// Cache accounts & categories
+rootStore.categoryStore.fetchCategories();
+
 // Observe history changes
 const historyAdapter = new HistoryAdapter(rootStore.routerStore, history);
 historyAdapter.observeRouterStateChanges();
-
-// Cache categories
-rootStore.categoryStore.fetchCategories();
 
 export const App = () => {
     return (

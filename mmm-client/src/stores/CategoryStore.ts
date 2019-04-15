@@ -50,6 +50,10 @@ export class CategoryStore {
         );
     }
 
+    getCategory(categoryId: number): Category | undefined {
+        return this.categories.find(category => category.id === categoryId);
+    }
+
     async fetchCategories() {
         // if categories have been cached, don't fetch again
         if (this.categories.length > 0) {

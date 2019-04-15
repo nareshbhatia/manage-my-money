@@ -305,7 +305,7 @@
             "description": "Gets transaction summaries for txn dates on or after startDate (valid when groupByCategory is specified)",
             "schema": {
               "type": "string",
-              "example": "2014-01-01T00:00:00.000Z"
+              "example": "2018-01-01"
             }
           },
           {
@@ -315,7 +315,7 @@
             "description": "Gets transaction summaries for txn dates on or before endDate (valid when groupByCategory is specified)",
             "schema": {
               "type": "string",
-              "example": "2014-12-31T00:00:00.000Z"
+              "example": "2018-12-31"
             }
           }
         ],
@@ -353,7 +353,14 @@
         },
         "responses": {
           "200": {
-            "description": "Success - returns CreateTransactionInput + id"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
           }
         }
       }
@@ -408,7 +415,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTransactionInput"
+                "$ref": "#/components/schemas/Transaction"
               }
             }
           }
@@ -419,7 +426,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateTransactionInput"
+                  "$ref": "#/components/schemas/Transaction"
                 }
               }
             }
@@ -527,8 +534,8 @@
           "txnDate",
           "payee",
           "amount",
-          "account",
-          "category"
+          "accountId",
+          "categoryId"
         ],
         "properties": {
           "id": {
@@ -538,7 +545,7 @@
           "txnDate": {
             "type": "string",
             "description": "ISO 8601 format",
-            "example": "2013-01-01T00:00:00.000Z"
+            "example": "2019-01-01"
           },
           "payee": {
             "type": "string",
@@ -553,11 +560,13 @@
             "description": "Positive for income, negative for expense",
             "example": -55.74
           },
-          "account": {
-            "$ref": "#/components/schemas/Account"
+          "accountId": {
+            "type": "number",
+            "example": 1
           },
-          "category": {
-            "$ref": "#/components/schemas/Category"
+          "categoryId": {
+            "type": "number",
+            "example": 1
           }
         }
       },
@@ -609,7 +618,7 @@
           "txnDate": {
             "type": "string",
             "description": "ISO 8601 format",
-            "example": "2013-01-01T00:00:00.000Z"
+            "example": "2019-01-01"
           },
           "payee": {
             "type": "string",
@@ -621,49 +630,6 @@
           },
           "amount": {
             "type": "number",
-            "description": "Positive for income, negative for expense",
-            "example": -55.74
-          },
-          "accountId": {
-            "type": "number",
-            "example": 1
-          },
-          "categoryId": {
-            "type": "number",
-            "example": 1
-          }
-        }
-      },
-      "UpdateTransactionInput": {
-        "type": "object",
-        "required": [
-          "id",
-          "txnDate",
-          "payee",
-          "amount",
-          "accountId",
-          "categoryId"
-        ],
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "txnDate": {
-            "type": "string",
-            "description": "ISO 8601 format",
-            "example": "2013-01-01T00:00:00.000Z"
-          },
-          "payee": {
-            "type": "string",
-            "example": "Whole Foods"
-          },
-          "memo": {
-            "type": "string",
-            "example": "Groceries for soup kitchen"
-          },
-          "amount": {
-            "type": "string",
             "description": "Positive for income, negative for expense",
             "example": -55.74
           },

@@ -3,7 +3,7 @@ import { db } from './db';
 import { resultMaps } from './resultMaps';
 
 /**
- * Gets an existing transaction along with its account and category.
+ * Gets an existing transaction.
  * @param {integer} id
  * @return {Promise} A promise that returns the desired transaction.
  */
@@ -11,27 +11,18 @@ function getTransaction(id) {
     const knex = db.getKnex();
     return knex
         .select(
-            't.id as transaction_id',
-            't.txn_date as transaction_txn_date',
-            't.payee as transaction_payee',
-            't.memo as transaction_memo',
-            't.amount as transaction_amount',
-            'a.id as account_id',
-            'a.name as account_name',
-            'c.id as category_id',
-            'c.name as category_name'
+            'id',
+            'txn_date',
+            'payee',
+            'memo',
+            'amount',
+            'account_id',
+            'category_id'
         )
-        .from('transactions as t')
-        .leftOuterJoin('accounts as a', 't.account_id', 'a.id')
-        .leftOuterJoin('categories as c', 't.category_id', 'c.id')
-        .where('t.id', id)
+        .from('transactions')
+        .where('id', id)
         .then(resultSet =>
-            joinjs.mapOne(
-                resultSet,
-                resultMaps,
-                'transactionMap',
-                'transaction_'
-            )
+            joinjs.mapOne(resultSet, resultMaps, 'transactionMap')
         );
 }
 
@@ -45,28 +36,22 @@ function getTransactions(accountId) {
     const knex = db.getKnex();
     const filterOptions = {};
     if (accountId) {
-        filterOptions['t.account_id'] = accountId;
+        filterOptions['account_id'] = accountId;
     }
 
     return knex
         .select(
-            't.id as transaction_id',
-            't.txn_date as transaction_txn_date',
-            't.payee as transaction_payee',
-            't.memo as transaction_memo',
-            't.amount as transaction_amount',
-            'a.id as account_id',
-            'a.name as account_name',
-            'c.id as category_id',
-            'c.name as category_name'
+            'id',
+            'txn_date',
+            'payee',
+            'memo',
+            'amount',
+            'account_id',
+            'category_id'
         )
-        .from('transactions as t')
-        .leftOuterJoin('accounts as a', 't.account_id', 'a.id')
-        .leftOuterJoin('categories as c', 't.category_id', 'c.id')
+        .from('transactions')
         .where(filterOptions)
-        .then(resultSet =>
-            joinjs.map(resultSet, resultMaps, 'transactionMap', 'transaction_')
-        );
+        .then(resultSet => joinjs.map(resultSet, resultMaps, 'transactionMap'));
 }
 
 /**

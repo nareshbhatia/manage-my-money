@@ -205,14 +205,14 @@ paths:
           description: Gets transaction summaries for txn dates on or after startDate (valid when groupByCategory is specified)
           schema:
             type: string
-            example: 2014-01-01
+            example: 2018-01-01
         - in: query
           name: endDate
           required: false
           description: Gets transaction summaries for txn dates on or before endDate (valid when groupByCategory is specified)
           schema:
             type: string
-            example: 2014-12-31
+            example: 2018-12-31
       responses:
         200:
           description: Success
@@ -233,7 +233,11 @@ paths:
               $ref: '#/components/schemas/CreateTransactionInput'
       responses:
         200:
-          description: Success - returns CreateTransactionInput + id
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
 
   /transactions/{id}:
     get:
@@ -271,14 +275,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTransactionInput'
+              $ref: '#/components/schemas/Transaction'
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateTransactionInput'
+                $ref: '#/components/schemas/Transaction'
 
     delete:
       description: Delete an transaction
@@ -357,8 +361,8 @@ components:
         - txnDate
         - payee
         - amount
-        - account
-        - category
+        - accountId
+        - categoryId
       properties:
         id:
           type: number
@@ -366,7 +370,7 @@ components:
         txnDate:
           type: string
           description: ISO 8601 format
-          example: 2013-01-01
+          example: 2019-01-01
         payee:
           type: string
           example: Whole Foods
@@ -377,10 +381,12 @@ components:
           type: number
           description: Positive for income, negative for expense
           example: -55.74
-        account:
-          $ref: '#/components/schemas/Account'
-        category:
-          $ref: '#/components/schemas/Category'
+        accountId:
+          type: number
+          example: 1
+        categoryId:
+          type: number
+          example: 1
 
     Transactions:
       type: array
@@ -422,41 +428,7 @@ components:
         txnDate:
           type: string
           description: ISO 8601 format
-          example: 2013-01-01
-        payee:
-          type: string
-          example: Whole Foods
-        memo:
-          type: string
-          example: Groceries for soup kitchen
-        amount:
-          type: number
-          description: Positive for income, negative for expense
-          example: -55.74
-        accountId:
-          type: number
-          example: 1
-        categoryId:
-          type: number
-          example: 1
-
-    UpdateTransactionInput:
-      type: object
-      required:
-        - id
-        - txnDate
-        - payee
-        - amount
-        - accountId
-        - categoryId
-      properties:
-        id:
-          type: number
-          example: 1
-        txnDate:
-          type: string
-          description: ISO 8601 format
-          example: 2013-01-01
+          example: 2019-01-01
         payee:
           type: string
           example: Whole Foods

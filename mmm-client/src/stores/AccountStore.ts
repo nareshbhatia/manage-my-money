@@ -42,6 +42,10 @@ export class AccountStore {
         );
     }
 
+    getAccount(accountId: number): Account | undefined {
+        return this.accounts.find(account => account.id === accountId);
+    }
+
     async fetchAccounts() {
         // if accounts have been cached, don't fetch again
         if (this.accounts.length > 0) {

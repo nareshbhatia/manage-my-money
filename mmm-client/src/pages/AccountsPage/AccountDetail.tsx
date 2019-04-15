@@ -10,6 +10,18 @@ import { numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
 import { FormInput, TxnDialog } from './TxnDialog';
 
+interface CategoryRendererProps {
+    value: number;
+}
+
+interface DateRendererProps {
+    value: Date;
+}
+
+interface MoneyRendererProps {
+    value: number;
+}
+
 export const AccountDetail = observer(() => {
     const rootStore = useContext(RootStoreContext);
     const { accountStore, categoryStore, transactionStore } = rootStore;
@@ -51,7 +63,8 @@ export const AccountDetail = observer(() => {
         },
         {
             headerName: 'Category',
-            field: 'category.name'
+            field: 'categoryId',
+            cellRenderer: 'categoryRenderer'
         },
         {
             headerName: 'Amount',
@@ -70,7 +83,19 @@ export const AccountDetail = observer(() => {
             field: 'memo'
         }
     ];
+
+    const CategoryRenderer = ({ value }: CategoryRendererProps) => {
+        const category = categoryStore.getCategory(value);
+        return category ? category.name : value.toString();
+    };
+
+    const DateRenderer = ({ value }: DateRendererProps) => value.toString();
+
+    const MoneyRenderer = ({ value }: MoneyRendererProps) =>
+        numberToMoney(value);
+
     const frameworkComponents = {
+        categoryRenderer: CategoryRenderer,
         dateRenderer: DateRenderer,
         moneyRenderer: MoneyRenderer
     };
@@ -107,8 +132,8 @@ export const AccountDetail = observer(() => {
             payee: txn.payee,
             memo: txn.memo || '',
             amount: numberToMoney(txn.amount),
-            accountId: txn.account.id,
-            categoryId: txn.category.id
+            accountId: txn.accountId,
+            categoryId: txn.categoryId
         });
         // Do this last, otherwise TxnDialog will show previous data
         setShowTxnDialog(true);
@@ -160,15 +185,3 @@ export const AccountDetail = observer(() => {
         </React.Fragment>
     );
 });
-
-interface DateRendererProps {
-    value: Date;
-}
-
-const DateRenderer = ({ value }: DateRendererProps) => value.toString();
-
-interface MoneyRendererProps {
-    value: number;
-}
-
-const MoneyRenderer = ({ value }: MoneyRendererProps) => numberToMoney(value);

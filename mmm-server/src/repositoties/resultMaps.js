@@ -15,15 +15,9 @@ export const resultMaps = [
             { name: 'txnDate', column: 'txn_date' },
             'payee',
             'memo',
-            'amount'
-        ],
-        associations: [
-            { name: 'account', mapId: 'accountMap', columnPrefix: 'account_' },
-            {
-                name: 'category',
-                mapId: 'categoryMap',
-                columnPrefix: 'category_'
-            }
+            'amount',
+            { name: 'accountId', column: 'account_id' },
+            { name: 'categoryId', column: 'category_id' }
         ]
     }
 ];
