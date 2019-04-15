@@ -15,7 +15,7 @@ export interface Transaction {
 
 export interface TransactionInput {
     id?: number;
-    txnDate: LocalDate;
+    txnDate: string;
     payee: string;
     memo: string;
     amount: number;

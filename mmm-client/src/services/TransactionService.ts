@@ -19,13 +19,7 @@ async function getTransactionsForAccount(
     const data = resp.data;
 
     // Convert to application domain and return
-    return data.map((txn: any) => {
-        const { txnDate, ...rest } = txn;
-        return {
-            txnDate: LocalDate.parse(txnDate),
-            ...rest
-        };
-    });
+    return data.map((txn: any) => mapToDomain(txn));
 }
 
 async function getTransactionsByCategory(
@@ -46,30 +40,35 @@ async function getTransactionsByCategory(
 // }
 
 async function createTransaction(txn: TransactionInput) {
-    const { txnDate, ...rest } = txn;
-    const jsTxn = {
-        txnDate: txnDate.toString(),
-        ...rest
-    };
-    try {
-        const resp = await axios.post(`${api}/transactions`, jsTxn);
-        return resp.data;
-    } catch (e) {
-        throw e;
-    }
+    const resp = await axios.post(`${api}/transactions`, txn);
+    return mapToDomain(resp.data);
 }
 
-// function updateTransaction(transaction) {
-// }
-//
+async function updateTransaction(txn: TransactionInput) {
+    const resp = await axios.put(`${api}/transactions/${txn.id}`, txn);
+    return mapToDomain(resp.data);
+}
+
 // function deleteTransaction(id) {
 // }
+
+/**
+ * Map transaction received from server to domain
+ * @param transaction
+ */
+function mapToDomain(transaction: any) {
+    const { txnDate, ...rest } = transaction;
+    return {
+        txnDate: LocalDate.parse(txnDate),
+        ...rest
+    };
+}
 
 export const TransactionService = {
     getTransactionsForAccount,
     getTransactionsByCategory,
-    // getAccount,
-    createTransaction
-    // updateAccount,
-    // deleteAccount
+    // getTransaction,
+    createTransaction,
+    updateTransaction
+    // deleteTransaction
 };

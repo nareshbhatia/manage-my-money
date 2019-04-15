@@ -7,8 +7,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/styles';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
-import { TextInput } from '../../components';
-import { TransactionInput } from '../../models';
+import { Select, TextInput } from '../../components';
+import { Category, TransactionInput } from '../../models';
 
 const useStyles = makeStyles({
     dialogPaper: {
@@ -17,16 +17,25 @@ const useStyles = makeStyles({
     content: {
         display: 'flex',
         flexDirection: 'column'
+    },
+    selectStyle: {
+        width: '100%'
     }
 });
 
 export interface TxnDialogProps {
     txn: TransactionInput;
+    categories: Array<Category>;
     onSave: (txn: TransactionInput) => void;
     onCancel: () => void;
 }
 
-export const TxnDialog = ({ txn, onSave, onCancel }: TxnDialogProps) => {
+export const TxnDialog = ({
+    txn,
+    categories,
+    onSave,
+    onCancel
+}: TxnDialogProps) => {
     const classes = useStyles();
 
     const validationSchema = yup.object().shape({
@@ -62,6 +71,7 @@ export const TxnDialog = ({ txn, onSave, onCancel }: TxnDialogProps) => {
                                 name="txnDate"
                                 component={TextInput}
                                 label="Date"
+                                type="date"
                                 fullWidth
                             />
                             <Field
@@ -72,9 +82,10 @@ export const TxnDialog = ({ txn, onSave, onCancel }: TxnDialogProps) => {
                             />
                             <Field
                                 name="categoryId"
-                                component={TextInput}
+                                component={Select}
                                 label="Category"
-                                fullWidth
+                                options={categories}
+                                className={classes.selectStyle}
                             />
                             <Field
                                 name="amount"

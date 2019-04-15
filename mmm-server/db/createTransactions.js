@@ -580,8 +580,13 @@ function createMonthEndTxns() {
 }
 
 export async function createTransactions() {
+    const INIT_ID_SEQ =
+        "SELECT setval('transactions_id_seq', (SELECT MAX(id) FROM transactions));";
+
     createOpeningBalances();
     createMonthlyTxns();
     createMonthEndTxns();
-    return Promise.all(promises);
+    return Promise.all(promises).then(() => {
+        return db.getKnex().raw(INIT_ID_SEQ);
+    });
 }

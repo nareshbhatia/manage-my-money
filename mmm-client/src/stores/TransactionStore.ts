@@ -1,4 +1,4 @@
-import { action, decorate, observable, reaction } from 'mobx';
+import { action, decorate, observable, reaction, toJS } from 'mobx';
 import { Transaction, TransactionInput } from '../models';
 import { TransactionService } from '../services';
 import { RootStore } from './RootStore';
@@ -35,7 +35,16 @@ export class TransactionStore {
         this.loading = true;
     }
 
-    setTransactions(transactions: Array<Transaction>) {
+    calculateBalances(transactions: Array<Transaction>) {
+        let balance = 0;
+        transactions.forEach(transaction => {
+            balance = balance + transaction.amount;
+            transaction.balance = balance;
+        });
+    }
+
+    processTxns(transactions: Array<Transaction>) {
+        // Sort by transaction date name
         transactions.sort((a, b) => {
             const dateA = a.txnDate;
             const dateB = b.txnDate;
@@ -50,17 +59,28 @@ export class TransactionStore {
         });
         this.calculateBalances(transactions);
 
-        // Save in reverse order
-        this.transactions = transactions.reverse();
+        // return in reverse order
+        return transactions.reverse();
+    }
+
+    setTxnsInStore(transactions: Array<Transaction>) {
+        this.transactions = this.processTxns(transactions);
         this.loading = false;
     }
 
-    calculateBalances(transactions: Array<Transaction>) {
-        let balance = 0;
-        transactions.forEach(transaction => {
-            balance = balance + transaction.amount;
-            transaction.balance = balance;
-        });
+    addTxnToStore(nexTxn: Transaction) {
+        const clone = toJS(this.transactions);
+        clone.push(nexTxn);
+        this.transactions = this.processTxns(clone);
+    }
+
+    updateTxnInStore(updTxn: Transaction) {
+        const clone = toJS(this.transactions);
+        const index = clone.findIndex((t) => t.id === updTxn.id );
+        if (index >= 0) {
+            clone[index] = updTxn;
+            this.transactions = this.processTxns(clone);
+        }
     }
 
     async fetchTransactions(accountId: number) {
@@ -68,16 +88,17 @@ export class TransactionStore {
         const data = await TransactionService.getTransactionsForAccount(
             accountId
         );
-        this.setTransactions(data);
+        this.setTxnsInStore(data);
     }
 
     async createTransaction(txn: TransactionInput) {
-        const data = await TransactionService.createTransaction(txn);
-        return data;
+        const newTxn = await TransactionService.createTransaction(txn);
+        this.addTxnToStore(newTxn);
     }
 
     async updateTransaction(txn: TransactionInput) {
-        return;
+        const updTxn = await TransactionService.updateTransaction(txn);
+        this.updateTxnInStore(updTxn);
     }
 }
 
@@ -85,5 +106,7 @@ decorate(TransactionStore, {
     loading: observable,
     transactions: observable.shallow,
     clearTransactions: action,
-    setTransactions: action
+    setTxnsInStore: action,
+    addTxnToStore: action,
+    updateTxnInStore: action
 });

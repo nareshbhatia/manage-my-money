@@ -1,18 +1,18 @@
 import React, { useContext, useState } from 'react';
-import { ColDef, AgGridEvent } from 'ag-grid-community';
+import { AgGridEvent, CellDoubleClickedEvent, ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { LocalDate } from 'js-joda';
 import { observer } from 'mobx-react';
 import { FlexContainer, FloatingAddButton, Loading } from '../../components';
 import { RootStoreContext } from '../../contexts';
-import { TransactionInput } from '../../models';
+import { Transaction, TransactionInput } from '../../models';
 import { numberToMoney } from '../../utils';
 import { AccountHeader } from './AccountHeader';
 import { TxnDialog } from './TxnDialog';
 
 export const AccountDetail = observer(() => {
     const rootStore = useContext(RootStoreContext);
-    const { accountStore, transactionStore } = rootStore;
+    const { accountStore, categoryStore, transactionStore } = rootStore;
 
     const [showTxnDialog, setShowTxnDialog] = useState(false);
     const [isNewTxn, setNewTxn] = useState(true);
@@ -23,6 +23,7 @@ export const AccountDetail = observer(() => {
     }
 
     const { selectedAccount: account } = accountStore;
+    const { categories } = categoryStore;
     const { transactions } = transactionStore;
 
     // ----- Configure the grid -----
@@ -75,7 +76,7 @@ export const AccountDetail = observer(() => {
     };
 
     // Auto-size all columns onGridReady
-    const onGridReady = (params: AgGridEvent) => {
+    const handleGridReady = (params: AgGridEvent) => {
         const allColumnIds: Array<string> = [];
         params.columnApi.getAllColumns().forEach(column => {
             allColumnIds.push(column.getColId());
@@ -84,23 +85,33 @@ export const AccountDetail = observer(() => {
     };
 
     const handleCreateTransaction = () => {
-        setShowTxnDialog(true);
         setNewTxn(true);
         setEditedTxn({
-            txnDate: LocalDate.now(),
+            txnDate: LocalDate.now().toString(),
             payee: '',
             memo: '',
             amount: 0,
             accountId: account ? account.id : 0,
             categoryId: 0
         });
+        // Do this last, otherwise TxnDialog will show previous data
+        setShowTxnDialog(true);
     };
 
-    const handleEditTransaction = () => {
-        setShowTxnDialog(true);
+    const handleCellDoubleClicked = (e: CellDoubleClickedEvent) => {
+        const txn: Transaction = e.data;
         setNewTxn(false);
-        // TODO: Set to the double-clicked transaction
-        // setEditedTxn(newTxn);
+        setEditedTxn({
+            id: txn.id,
+            txnDate: txn.txnDate.toString(),
+            payee: txn.payee,
+            memo: txn.memo || '',
+            amount: txn.amount,
+            accountId: txn.account.id,
+            categoryId: txn.category.id
+        });
+        // Do this last, otherwise TxnDialog will show previous data
+        setShowTxnDialog(true);
     };
 
     const handleTxnDialogSave = (txn: TransactionInput) => {
@@ -132,7 +143,8 @@ export const AccountDetail = observer(() => {
                     columnDefs={columnDefs}
                     frameworkComponents={frameworkComponents}
                     rowData={transactions}
-                    onGridReady={onGridReady}
+                    onGridReady={handleGridReady}
+                    onCellDoubleClicked={handleCellDoubleClicked}
                 />
                 <FloatingAddButton onClick={handleCreateTransaction} />
             </FlexContainer>
@@ -140,6 +152,7 @@ export const AccountDetail = observer(() => {
             {showTxnDialog && editedTxn && (
                 <TxnDialog
                     txn={editedTxn}
+                    categories={categories}
                     onSave={handleTxnDialogSave}
                     onCancel={handleTxnDialogCancel}
                 />

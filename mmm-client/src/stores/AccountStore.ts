@@ -27,6 +27,7 @@ export class AccountStore {
         accounts.sort((a, b) => {
             return a.id - b.id;
         });
+
         this.accounts = accounts;
         this.loading = false;
     }

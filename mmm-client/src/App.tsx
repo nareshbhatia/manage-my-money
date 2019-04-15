@@ -14,6 +14,9 @@ rootStore.init();
 const historyAdapter = new HistoryAdapter(rootStore.routerStore, history);
 historyAdapter.observeRouterStateChanges();
 
+// Cache categories
+rootStore.categoryStore.fetchCategories();
+
 export const App = () => {
     return (
         <ErrorBoundary>
