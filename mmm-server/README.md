@@ -16,6 +16,10 @@ docker-compose up -d
 npm install
 npm run create-schema
 npm run load-data
+
+# Now you can interact with the database using a local instance of psql
+# Password is 'docker'
+psql -h localhost -U postgres
 ```
 
 At this point, you should have a running server. Point your browser to
@@ -56,6 +60,19 @@ click on "Open dedicated DevTools for Node".
 npm run build
 npm run serve
 ```
+
+## Creating a permanent volume to store data
+
+Note that the current docker-compose configuration creates a temporary volume to
+store data. This volume will be deleted when the container is deleted. To create
+a permanent volume, first create a local directory, e.g.
+
+    mkdir -p $HOME/docker/volumes/postgres
+
+Then add the following volume mapping to docker-compose.yml. This will mount the
+host volume to the postgresql data directory in the container:
+
+    $HOME/docker/volumes/postgres:/var/lib/postgresql/data
 
 ## Build a Docker image
 

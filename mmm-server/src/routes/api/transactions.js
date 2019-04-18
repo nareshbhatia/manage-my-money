@@ -61,7 +61,7 @@ transactionsRouter.get(
     })
 );
 
-// Create an transaction
+// Create a transaction
 transactionsRouter.post(
     '/',
     asyncHandler(async (req, res) => {
@@ -73,7 +73,7 @@ transactionsRouter.post(
     })
 );
 
-// Update an transaction
+// Update a transaction
 transactionsRouter.put(
     '/:id',
     asyncHandler(async (req, res) => {
@@ -85,7 +85,7 @@ transactionsRouter.put(
     })
 );
 
-// Delete an transaction
+// Delete a transaction
 transactionsRouter.delete(
     '/:id',
     asyncHandler(async (req, res) => {

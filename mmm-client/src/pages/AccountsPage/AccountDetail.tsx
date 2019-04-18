@@ -146,6 +146,13 @@ export const AccountDetail = observer(() => {
         setShowTxnDialog(false);
     };
 
+    const handleTxnDialogDelete = () => {
+        if (formInput && formInput.id) {
+            transactionStore.deleteTransaction(formInput.id);
+        }
+        setShowTxnDialog(false);
+    };
+
     const handleTxnDialogCancel = () => {
         setShowTxnDialog(false);
     };
@@ -179,6 +186,7 @@ export const AccountDetail = observer(() => {
                     formInput={formInput}
                     categories={categories}
                     onSave={handleTxnDialogSave}
+                    onDelete={handleTxnDialogDelete}
                     onCancel={handleTxnDialogCancel}
                 />
             )}

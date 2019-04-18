@@ -36,8 +36,10 @@ async function getTransactionsByCategory(
     return resp.data;
 }
 
-// function getTransaction(id) {
-// }
+async function getTransaction(txnId: number) {
+    const resp = await axios.post(`${api}/transactions/${txnId}`);
+    return mapToDomain(resp.data);
+}
 
 async function createTransaction(txn: TransactionInput) {
     const resp = await axios.post(`${api}/transactions`, txn);
@@ -49,8 +51,9 @@ async function updateTransaction(txn: TransactionInput) {
     return mapToDomain(resp.data);
 }
 
-// function deleteTransaction(id) {
-// }
+async function deleteTransaction(txnId: number) {
+    await axios.delete(`${api}/transactions/${txnId}`);
+}
 
 /**
  * Map transaction received from server to domain
@@ -67,8 +70,8 @@ function mapToDomain(transaction: any) {
 export const TransactionService = {
     getTransactionsForAccount,
     getTransactionsByCategory,
-    // getTransaction,
+    getTransaction,
     createTransaction,
-    updateTransaction
-    // deleteTransaction
+    updateTransaction,
+    deleteTransaction
 };

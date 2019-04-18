@@ -83,6 +83,12 @@ export class TransactionStore {
         }
     }
 
+    deleteTxnInStore(txnId: number) {
+        const clone = toJS(this.transactions);
+        const filtered = clone.filter(t => t.id !== txnId);
+        this.transactions = this.processTxns(filtered);
+    }
+
     async fetchTransactions(accountId: number) {
         this.clearTransactions();
         const data = await TransactionService.getTransactionsForAccount(
@@ -100,6 +106,11 @@ export class TransactionStore {
         const updTxn = await TransactionService.updateTransaction(txn);
         this.updateTxnInStore(updTxn);
     }
+
+    async deleteTransaction(txnId: number) {
+        await TransactionService.deleteTransaction(txnId);
+        this.deleteTxnInStore(txnId);
+    }
 }
 
 decorate(TransactionStore, {
@@ -108,5 +119,6 @@ decorate(TransactionStore, {
     clearTransactions: action,
     setTxnsInStore: action,
     addTxnToStore: action,
-    updateTxnInStore: action
+    updateTxnInStore: action,
+    deleteTxnInStore: action
 });

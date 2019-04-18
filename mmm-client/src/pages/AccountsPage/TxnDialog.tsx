@@ -11,7 +11,7 @@ import { Select, TextInput } from '../../components';
 import { Category, TransactionInput } from '../../models';
 import { stringToNumber } from '../../utils';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     dialogPaper: {
         width: 400
     },
@@ -19,10 +19,17 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column'
     },
-    selectStyle: {
+    select: {
         width: '100%'
+    },
+    delete: {
+        marginLeft: 12,
+        color: theme.palette.error.main
+    },
+    spacer: {
+        flex: 1
     }
-});
+}));
 
 // This is to allow amount field to be blank for new transactions
 // See https://github.com/jaredpalmer/formik/issues/961#issuecomment-473191907
@@ -40,6 +47,7 @@ export interface TxnDialogProps {
     formInput: FormInput;
     categories: Array<Category>;
     onSave: (txn: TransactionInput) => void;
+    onDelete: () => void;
     onCancel: () => void;
 }
 
@@ -47,6 +55,7 @@ export const TxnDialog = ({
     formInput,
     categories,
     onSave,
+    onDelete,
     onCancel
 }: TxnDialogProps) => {
     const classes = useStyles();
@@ -112,7 +121,7 @@ export const TxnDialog = ({
                                 component={Select}
                                 label="Category"
                                 options={categories}
-                                className={classes.selectStyle}
+                                className={classes.select}
                             />
                             <Field
                                 name="amount"
@@ -129,6 +138,10 @@ export const TxnDialog = ({
                         </Form>
                     </DialogContent>
                     <DialogActions>
+                        <Button onClick={onDelete} className={classes.delete}>
+                            DELETE
+                        </Button>
+                        <span className={classes.spacer} />
                         <Button onClick={onCancel} color="secondary">
                             CANCEL
                         </Button>
