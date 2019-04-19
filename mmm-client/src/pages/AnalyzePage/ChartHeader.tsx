@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export interface ChartHeaderProps {
     netIncome: number;
     timePeriod: string;
-    onTimePeriodChange: (event: any) => void;
+    onTimePeriodChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
 export const ChartHeader = ({
