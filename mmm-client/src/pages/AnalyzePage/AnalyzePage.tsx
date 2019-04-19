@@ -53,9 +53,7 @@ export const AnalyzePage = () => {
         fetchData();
     }, [timePeriod]);
 
-    const handleTimePeriodChange = (
-        event: React.ChangeEvent<HTMLSelectElement>
-    ) => {
+    const handleTimePeriodChange = (event: any) => {
         setTimePeriod(event.target.value);
     };
 

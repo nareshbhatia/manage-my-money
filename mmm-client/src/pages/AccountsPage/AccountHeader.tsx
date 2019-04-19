@@ -1,9 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/styles';
 import { numberToMoney } from '../../utils';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'row'

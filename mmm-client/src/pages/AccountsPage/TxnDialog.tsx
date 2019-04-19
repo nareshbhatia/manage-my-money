@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
@@ -11,7 +12,7 @@ import { Select, TextInput } from '../../components';
 import { Category, TransactionInput } from '../../models';
 import { stringToNumber } from '../../utils';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
     dialogPaper: {
         width: 400
     },

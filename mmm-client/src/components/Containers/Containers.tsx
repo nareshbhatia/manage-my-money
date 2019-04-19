@@ -1,8 +1,9 @@
 import React from 'react';
+import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
     fullHeightContainer: {
         height: '100vh',
         display: 'flex',

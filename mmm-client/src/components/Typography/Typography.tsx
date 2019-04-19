@@ -1,9 +1,10 @@
 import React from 'react';
+import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
     title: {
         marginTop: theme.spacing(2),
         marginRight: theme.spacing(2),

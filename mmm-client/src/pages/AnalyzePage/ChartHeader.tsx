@@ -3,11 +3,12 @@ import { LocalDate } from 'js-joda';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import { getDateRange, numberToMoney, TimePeriods } from '../../utils';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'row'
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 export interface ChartHeaderProps {
     netIncome: number;
     timePeriod: string;
-    onTimePeriodChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onTimePeriodChange: (event: any) => void;
 }
 
 export const ChartHeader = ({
