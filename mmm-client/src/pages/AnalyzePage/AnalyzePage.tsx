@@ -9,12 +9,11 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
+import { FullHeightContainer, Header, Loading } from '../../components';
 import { TransactionSummaryByCategory } from '../../models';
 import { TransactionService } from '../../services';
 import { getDateRange, TimePeriods } from '../../utils';
 import { ChartHeader } from './ChartHeader';
-
-import { FullHeightContainer, Header, Loading } from '../../components';
 
 export const AnalyzePage = () => {
     const [timePeriod, setTimePeriod] = useState(TimePeriods.thisMonth.id);
@@ -23,6 +22,7 @@ export const AnalyzePage = () => {
         Array<TransactionSummaryByCategory>
     >([]);
 
+    // TODO: Put in a useQuery
     useEffect(() => {
         async function fetchData() {
             setLoading(true);

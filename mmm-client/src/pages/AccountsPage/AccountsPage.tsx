@@ -12,8 +12,13 @@ import { AccountList } from './AccountList';
 import { AccountDetail } from './AccountDetail';
 
 const useStyles = makeStyles((theme: Theme) => ({
+    row: {
+        // see https://stackoverflow.com/questions/55896508/nested-scrolling-containers-using-flexbox
+        minHeight: 0
+    },
     lhs: {
         minWidth: 200,
+        overflow: 'auto',
         backgroundColor: lighten(theme.palette.primary.main, 0.9)
     }
 }));
@@ -24,7 +29,7 @@ export const AccountsPage = () => {
     return (
         <FullHeightContainer>
             <Header />
-            <FlexRow>
+            <FlexRow className={classes.row}>
                 <div className={classes.lhs}>
                     <AccountList />
                 </div>
