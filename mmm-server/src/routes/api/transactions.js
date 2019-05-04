@@ -69,7 +69,7 @@ transactionsRouter.post(
         const transaction = await TransactionService.createTransaction(
             transactionData
         );
-        res.send(transaction);
+        res.status(201).send(transaction);
     })
 );
 

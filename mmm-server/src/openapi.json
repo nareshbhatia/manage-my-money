@@ -15,9 +15,12 @@
     "/accounts": {
       "get": {
         "description": "Get all accounts",
+        "tags": [
+          "accounts"
+        ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -30,6 +33,9 @@
       },
       "post": {
         "description": "Create an account",
+        "tags": [
+          "accounts"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -42,7 +48,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -57,6 +63,9 @@
     "/accounts/{id}": {
       "get": {
         "description": "Get a specific account",
+        "tags": [
+          "accounts"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -71,7 +80,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -81,12 +90,15 @@
             }
           },
           "404": {
-            "description": "NotFoundError"
+            "$ref": "#/components/responses/NotFound"
           }
         }
       },
       "put": {
         "description": "Update an account",
+        "tags": [
+          "accounts"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -111,7 +123,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -119,11 +131,17 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       },
       "delete": {
         "description": "Delete an account",
+        "tags": [
+          "accounts"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -138,7 +156,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Success"
+            "$ref": "#/components/responses/NoContent"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
@@ -146,9 +167,12 @@
     "/categories": {
       "get": {
         "description": "Get all categories",
+        "tags": [
+          "categories"
+        ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -161,6 +185,9 @@
       },
       "post": {
         "description": "Create an category",
+        "tags": [
+          "categories"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -173,7 +200,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -188,6 +215,9 @@
     "/categories/{id}": {
       "get": {
         "description": "Get a specific category",
+        "tags": [
+          "categories"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -202,7 +232,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -212,12 +242,15 @@
             }
           },
           "404": {
-            "description": "NotFoundError"
+            "$ref": "#/components/responses/NotFound"
           }
         }
       },
       "put": {
         "description": "Update an category",
+        "tags": [
+          "categories"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -242,7 +275,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -250,11 +283,17 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       },
       "delete": {
         "description": "Delete an category",
+        "tags": [
+          "categories"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -269,7 +308,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Success"
+            "$ref": "#/components/responses/NoContent"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
@@ -277,6 +319,9 @@
     "/transactions": {
       "get": {
         "description": "Get all transactions",
+        "tags": [
+          "transactions"
+        ],
         "parameters": [
           {
             "in": "query",
@@ -302,7 +347,7 @@
             "in": "query",
             "name": "startDate",
             "required": false,
-            "description": "Gets transaction summaries for txn dates on or after startDate (valid when groupByCategory is specified)",
+            "description": "Gets transaction summaries for txn dates on or after\nstartDate (valid when groupByCategory is specified)\n",
             "schema": {
               "type": "string",
               "example": "2018-01-01"
@@ -312,7 +357,7 @@
             "in": "query",
             "name": "endDate",
             "required": false,
-            "description": "Gets transaction summaries for txn dates on or before endDate (valid when groupByCategory is specified)",
+            "description": "Gets transaction summaries for txn dates on or before\nendDate (valid when groupByCategory is specified)\n",
             "schema": {
               "type": "string",
               "example": "2018-12-31"
@@ -321,7 +366,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -341,6 +386,9 @@
       },
       "post": {
         "description": "Create a transaction",
+        "tags": [
+          "transactions"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -353,7 +401,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -368,6 +416,9 @@
     "/transactions/{id}": {
       "get": {
         "description": "Get a specific transaction",
+        "tags": [
+          "transactions"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -382,7 +433,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -392,12 +443,15 @@
             }
           },
           "404": {
-            "description": "NotFoundError"
+            "$ref": "#/components/responses/NotFound"
           }
         }
       },
       "put": {
         "description": "Update a transaction",
+        "tags": [
+          "transactions"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -422,7 +476,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -430,11 +484,17 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       },
       "delete": {
         "description": "Delete an transaction",
+        "tags": [
+          "transactions"
+        ],
         "parameters": [
           {
             "in": "path",
@@ -449,13 +509,71 @@
         ],
         "responses": {
           "204": {
-            "description": "Success"
+            "$ref": "#/components/responses/NoContent"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
     }
   },
   "components": {
+    "responses": {
+      "NoContent": {
+        "description": "NoContent"
+      },
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "NotFound",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
     "schemas": {
       "Account": {
         "type": "object",
@@ -524,6 +642,21 @@
           "name": {
             "type": "string",
             "example": "Transport"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },

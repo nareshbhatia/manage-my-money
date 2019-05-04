@@ -29,7 +29,7 @@ categoriesRouter.post(
     asyncHandler(async (req, res) => {
         const categoryData = req.body;
         const category = await CategoryService.createCategory(categoryData);
-        res.send(category);
+        res.status(201).send(category);
     })
 );
 

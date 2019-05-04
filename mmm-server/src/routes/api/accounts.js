@@ -29,7 +29,7 @@ accountsRouter.post(
     asyncHandler(async (req, res) => {
         const accountData = req.body;
         const account = await AccountService.createAccount(accountData);
-        res.send(account);
+        res.status(201).send(account);
     })
 );
 
