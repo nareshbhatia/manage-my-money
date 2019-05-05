@@ -10,3 +10,11 @@ $ npm start
 ```
 
 Now point your browser to http://localhost:3000/.
+
+## Test
+
+Execute the following command to run all tests and show test coverage.
+
+```bash
+npm test -- --watchAll=false --coverage
+```

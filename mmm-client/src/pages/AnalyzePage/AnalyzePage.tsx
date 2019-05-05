@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { LocalDate } from 'js-joda';
+import React, { useState } from 'react';
 import {
     BarChart,
     Bar,
@@ -10,48 +9,15 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import { FullHeightContainer, Header, Loading } from '../../components';
-import { TransactionSummaryByCategory } from '../../models';
-import { TransactionService } from '../../services';
-import { getDateRange, TimePeriods } from '../../utils';
+import { TimePeriods } from '../../utils';
 import { ChartHeader } from './ChartHeader';
+import { useTransactionSummary } from './useTransactionSummary';
 
 export const AnalyzePage = () => {
     const [timePeriod, setTimePeriod] = useState(TimePeriods.thisMonth.id);
-    const [loading, setLoading] = useState(true);
-    const [summaries, setSummaries] = useState<
-        Array<TransactionSummaryByCategory>
-    >([]);
 
-    // TODO: Put in a useQuery
-    useEffect(() => {
-        async function fetchData() {
-            setLoading(true);
-            const { startDate, endDate } = getDateRange(
-                LocalDate.now(),
-                timePeriod
-            );
-            const summaries = await TransactionService.getTransactionsByCategory(
-                startDate,
-                endDate
-            );
-
-            // Separate the positive and negative values, drop the zeros
-            const positives = summaries.filter(summary => summary.amount > 0);
-            const negatives = summaries.filter(summary => summary.amount < 0);
-
-            // Sort positives in descending order and negatives in ascending order
-            positives.sort((a, b) => a.amount - b.amount).reverse();
-            negatives.sort((a, b) => a.amount - b.amount);
-
-            // Merge the two
-            const allSummaries = positives.concat(negatives);
-
-            setSummaries(allSummaries);
-            setLoading(false);
-        }
-
-        fetchData();
-    }, [timePeriod]);
+    // Transaction Summaries
+    const { loading, summaries } = useTransactionSummary(timePeriod);
 
     const handleTimePeriodChange = (
         event: React.ChangeEvent<{ value: unknown }>

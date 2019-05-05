@@ -18,7 +18,6 @@ export function numberToMoney(value: number) {
  *     '100B'       --> 100
  *     '3.467TB'    --> 3467000000000
  *     '-76%'       --> -0.76
- *     '2:23:57'    --> NaN
  * @param value
  */
 export function stringToNumber(value: string) {

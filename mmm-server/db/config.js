@@ -1,5 +1,5 @@
 export const startDate = '2017-01-01';
-export const endDate = '2019-04-15';
+export const endDate = '2019-06-15';
 
 export const Accounts = {
     cash: {
