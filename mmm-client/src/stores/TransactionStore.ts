@@ -5,7 +5,8 @@ import { RootStore } from './RootStore';
 
 export class TransactionStore {
     rootStore: RootStore;
-    loading = true;
+    loading = false;
+    error?: Error;
     transactions: Array<Transaction> = [];
 
     selectedAccountDisposer: any;
@@ -32,6 +33,7 @@ export class TransactionStore {
 
     clearTransactions() {
         this.transactions = [];
+        this.error = undefined;
         this.loading = true;
     }
 
@@ -68,6 +70,10 @@ export class TransactionStore {
         this.loading = false;
     }
 
+    setError(e: Error) {
+        this.error = e;
+    }
+
     addTxnToStore(nexTxn: Transaction) {
         const clone = toJS(this.transactions);
         clone.push(nexTxn);
@@ -90,35 +96,53 @@ export class TransactionStore {
     }
 
     async fetchTransactions(accountId: number) {
-        this.clearTransactions();
-        const data = await TransactionService.getTransactionsForAccount(
-            accountId
-        );
-        this.setTxnsInStore(data);
+        try {
+            this.clearTransactions();
+            const data = await TransactionService.getTransactionsForAccount(
+                accountId
+            );
+            this.setTxnsInStore(data);
+        } catch (e) {
+            this.setError(e);
+        }
     }
 
     async createTransaction(txn: TransactionInput) {
-        const newTxn = await TransactionService.createTransaction(txn);
-        this.addTxnToStore(newTxn);
+        try {
+            const newTxn = await TransactionService.createTransaction(txn);
+            this.addTxnToStore(newTxn);
+        } catch (e) {
+            this.setError(e);
+        }
     }
 
     async updateTransaction(txn: TransactionInput) {
-        const updTxn = await TransactionService.updateTransaction(txn);
-        this.updateTxnInStore(updTxn);
+        try {
+            const updTxn = await TransactionService.updateTransaction(txn);
+            this.updateTxnInStore(updTxn);
+        } catch (e) {
+            this.setError(e);
+        }
     }
 
     async deleteTransaction(txnId: number) {
-        await TransactionService.deleteTransaction(txnId);
-        this.deleteTxnInStore(txnId);
+        try {
+            await TransactionService.deleteTransaction(txnId);
+            this.deleteTxnInStore(txnId);
+        } catch (e) {
+            this.setError(e);
+        }
     }
 }
 
 decorate(TransactionStore, {
     loading: observable,
+    error: observable,
     transactions: observable.shallow,
     clearTransactions: action,
     setTxnsInStore: action,
     addTxnToStore: action,
     updateTxnInStore: action,
-    deleteTxnInStore: action
+    deleteTxnInStore: action,
+    setError: action
 });

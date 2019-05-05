@@ -6,6 +6,7 @@ import { RootStore } from './RootStore';
 export class CategoryStore {
     rootStore: RootStore;
     loading = false;
+    error?: Error;
     categories: Array<Category> = [];
     selectedCategoryId = 0;
 
@@ -19,6 +20,7 @@ export class CategoryStore {
 
     clearCategories() {
         this.categories = [];
+        this.error = undefined;
         this.loading = true;
     }
 
@@ -38,6 +40,10 @@ export class CategoryStore {
 
         this.categories = categories;
         this.loading = false;
+    }
+
+    setError(e: Error) {
+        this.error = e;
     }
 
     setSelectedCategoryId(categoryId: number) {
@@ -60,19 +66,24 @@ export class CategoryStore {
             return true;
         }
 
-        this.clearCategories();
-        const data = await CategoryService.getCategories();
-        this.setCategories(data);
-        return true;
+        try {
+            this.clearCategories();
+            const data = await CategoryService.getCategories();
+            this.setCategories(data);
+        } catch (e) {
+            this.setError(e);
+        }
     }
 }
 
 decorate(CategoryStore, {
     loading: observable,
+    error: observable,
     categories: observable.shallow,
     selectedCategoryId: observable,
     selectedCategory: computed,
     clearCategories: action,
     setCategories: action,
+    setError: action,
     setSelectedCategoryId: action
 });

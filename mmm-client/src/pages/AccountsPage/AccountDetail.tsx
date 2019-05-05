@@ -30,7 +30,23 @@ export const AccountDetail = observer(() => {
     const [isNewTxn, setNewTxn] = useState(true);
     const [formInput, setFormInput] = useState<FormInput>();
 
-    if (transactionStore.loading) {
+    // Handle errors
+    if (accountStore.error) {
+        throw accountStore.error;
+    }
+    if (categoryStore.error) {
+        throw categoryStore.error;
+    }
+    if (transactionStore.error) {
+        throw transactionStore.error;
+    }
+
+    // Handle loading state
+    if (
+        accountStore.loading ||
+        categoryStore.loading ||
+        transactionStore.loading
+    ) {
         return <Loading />;
     }
 

@@ -18,11 +18,15 @@ export const AccountList = observer(() => {
     const rootStore = useContext(RootStoreContext);
     const { accountStore, routerStore } = rootStore;
 
-    if (accountStore.loading) {
-        return <Loading />;
+    const { loading, error, accounts, selectedAccountId } = accountStore;
+
+    if (error) {
+        throw error;
     }
 
-    const { accounts, selectedAccountId } = accountStore;
+    if (loading) {
+        return <Loading />;
+    }
 
     const handleClick = (accountId: number) => {
         routerStore.goTo('accounts', { accountId: accountId.toString() });

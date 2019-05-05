@@ -36,11 +36,12 @@ export const routes = [
             toState: RouterState,
             routerStore: RouterStore
         ) => {
-            const { accountStore } = routerStore.rootStore;
+            const { accountStore, categoryStore } = routerStore.rootStore;
             const { accountId } = toState.params;
 
             // fire and forget
             accountStore.fetchAccounts();
+            categoryStore.fetchCategories();
 
             // this will trigger the fetch of transactions
             accountStore.setSelectedAccountId(parseInt(accountId, 10));

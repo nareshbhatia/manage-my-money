@@ -6,6 +6,7 @@ import { RootStore } from './RootStore';
 export class AccountStore {
     rootStore: RootStore;
     loading = false;
+    error?: Error;
     accounts: Array<Account> = [];
     selectedAccountId = 0;
 
@@ -19,6 +20,7 @@ export class AccountStore {
 
     clearAccounts() {
         this.accounts = [];
+        this.error = undefined;
         this.loading = true;
     }
 
@@ -30,6 +32,10 @@ export class AccountStore {
 
         this.accounts = accounts;
         this.loading = false;
+    }
+
+    setError(e: Error) {
+        this.error = e;
     }
 
     setSelectedAccountId(accountId: number) {
@@ -52,19 +58,24 @@ export class AccountStore {
             return true;
         }
 
-        this.clearAccounts();
-        const data = await AccountService.getAccounts();
-        this.setAccounts(data);
-        return true;
+        try {
+            this.clearAccounts();
+            const data = await AccountService.getAccounts();
+            this.setAccounts(data);
+        } catch (e) {
+            this.setError(e);
+        }
     }
 }
 
 decorate(AccountStore, {
     loading: observable,
+    error: observable,
     accounts: observable.shallow,
     selectedAccountId: observable,
     selectedAccount: computed,
     clearAccounts: action,
     setAccounts: action,
+    setError: action,
     setSelectedAccountId: action
 });
