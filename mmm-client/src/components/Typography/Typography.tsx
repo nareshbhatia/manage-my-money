@@ -3,6 +3,7 @@ import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import Typography from '@material-ui/core/Typography';
+import { PageCenteredContainer } from '..';
 
 const useStyles = makeStyles((theme: Theme) => ({
     title: {
@@ -32,5 +33,15 @@ export const Title: React.FC<TypographyProps> = ({
         <Typography className={className} variant={variant}>
             {children}
         </Typography>
+    );
+};
+
+export const ErrorMessage: React.FC = ({ children }) => {
+    return (
+        <PageCenteredContainer dark={true}>
+            <Typography component="h1" variant="h3">
+                {children}
+            </Typography>
+        </PageCenteredContainer>
     );
 };

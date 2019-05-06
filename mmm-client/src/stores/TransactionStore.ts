@@ -31,7 +31,7 @@ export class TransactionStore {
         this.selectedAccountDisposer();
     }
 
-    clearTransactions() {
+    reset() {
         this.transactions = [];
         this.error = undefined;
         this.loading = true;
@@ -70,10 +70,6 @@ export class TransactionStore {
         this.loading = false;
     }
 
-    setError(e: Error) {
-        this.error = e;
-    }
-
     addTxnToStore(nexTxn: Transaction) {
         const clone = toJS(this.transactions);
         clone.push(nexTxn);
@@ -95,9 +91,13 @@ export class TransactionStore {
         this.transactions = this.processTxns(filtered);
     }
 
+    setError(e: Error) {
+        this.error = e;
+    }
+
     async fetchTransactions(accountId: number) {
         try {
-            this.clearTransactions();
+            this.reset();
             const data = await TransactionService.getTransactionsForAccount(
                 accountId
             );
@@ -139,7 +139,7 @@ decorate(TransactionStore, {
     loading: observable,
     error: observable,
     transactions: observable.shallow,
-    clearTransactions: action,
+    reset: action,
     setTxnsInStore: action,
     addTxnToStore: action,
     updateTxnInStore: action,

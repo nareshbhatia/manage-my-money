@@ -3,7 +3,7 @@ import { AgGridEvent, CellDoubleClickedEvent, ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { LocalDate } from 'js-joda';
 import { observer } from 'mobx-react';
-import { FlexContainer, FloatingAddButton, Loading } from '../../components';
+import { FlexContainer, FloatingAddButton } from '../../components';
 import { RootStoreContext } from '../../contexts';
 import { Transaction, TransactionInput } from '../../models';
 import { numberToMoney } from '../../utils';
@@ -29,26 +29,6 @@ export const AccountDetail = observer(() => {
     const [showTxnDialog, setShowTxnDialog] = useState(false);
     const [isNewTxn, setNewTxn] = useState(true);
     const [formInput, setFormInput] = useState<FormInput>();
-
-    // Handle errors
-    if (accountStore.error) {
-        throw accountStore.error;
-    }
-    if (categoryStore.error) {
-        throw categoryStore.error;
-    }
-    if (transactionStore.error) {
-        throw transactionStore.error;
-    }
-
-    // Handle loading state
-    if (
-        accountStore.loading ||
-        categoryStore.loading ||
-        transactionStore.loading
-    ) {
-        return <Loading />;
-    }
 
     const { selectedAccount: account } = accountStore;
     const { categories } = categoryStore;

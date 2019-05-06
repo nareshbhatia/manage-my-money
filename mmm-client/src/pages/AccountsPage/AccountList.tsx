@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/styles';
 import { observer } from 'mobx-react';
-import { FlexContainer, Loading, Title } from '../../components';
+import { FlexContainer, Title } from '../../components';
 import { RootStoreContext } from '../../contexts';
 
 const useStyles = makeStyles({
@@ -18,15 +18,7 @@ export const AccountList = observer(() => {
     const rootStore = useContext(RootStoreContext);
     const { accountStore, routerStore } = rootStore;
 
-    const { loading, error, accounts, selectedAccountId } = accountStore;
-
-    if (error) {
-        throw error;
-    }
-
-    if (loading) {
-        return <Loading />;
-    }
+    const { accounts, selectedAccountId } = accountStore;
 
     const handleClick = (accountId: number) => {
         routerStore.goTo('accounts', { accountId: accountId.toString() });

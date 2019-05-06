@@ -18,7 +18,7 @@ export class CategoryStore {
 
     destroy() {}
 
-    clearCategories() {
+    reset() {
         this.categories = [];
         this.error = undefined;
         this.loading = true;
@@ -67,7 +67,7 @@ export class CategoryStore {
         }
 
         try {
-            this.clearCategories();
+            this.reset();
             const data = await CategoryService.getCategories();
             this.setCategories(data);
         } catch (e) {
@@ -82,7 +82,7 @@ decorate(CategoryStore, {
     categories: observable.shallow,
     selectedCategoryId: observable,
     selectedCategory: computed,
-    clearCategories: action,
+    reset: action,
     setCategories: action,
     setError: action,
     setSelectedCategoryId: action

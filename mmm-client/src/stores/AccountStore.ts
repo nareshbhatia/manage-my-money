@@ -18,7 +18,7 @@ export class AccountStore {
 
     destroy() {}
 
-    clearAccounts() {
+    reset() {
         this.accounts = [];
         this.error = undefined;
         this.loading = true;
@@ -59,7 +59,7 @@ export class AccountStore {
         }
 
         try {
-            this.clearAccounts();
+            this.reset();
             const data = await AccountService.getAccounts();
             this.setAccounts(data);
         } catch (e) {
@@ -74,7 +74,7 @@ decorate(AccountStore, {
     accounts: observable.shallow,
     selectedAccountId: observable,
     selectedAccount: computed,
-    clearAccounts: action,
+    reset: action,
     setAccounts: action,
     setError: action,
     setSelectedAccountId: action
