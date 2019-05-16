@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
+import { ErrorBoundary, Loading } from '@nareshbhatia/react-force';
 import { HistoryAdapter } from 'mobx-state-router';
-import { ErrorBoundary, Loading } from './components';
 import { RootStoreContext } from './contexts';
 import { Router } from './Router';
 import { RootStore } from './stores';

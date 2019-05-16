@@ -1,12 +1,12 @@
 import React from 'react';
-
-import { FullHeightContainer, Header, Title } from '../../components';
+import { ViewVerticalContainer } from '@nareshbhatia/react-force';
+import { Header, Title } from '../../components';
 
 export const ManageAccountsPage = () => {
     return (
-        <FullHeightContainer>
+        <ViewVerticalContainer>
             <Header />
             <Title>Manage Accounts</Title>
-        </FullHeightContainer>
+        </ViewVerticalContainer>
     );
 };

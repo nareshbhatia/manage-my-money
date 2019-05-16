@@ -11,10 +11,10 @@ export const useTransactionSummary = (
     summaries: Array<TransactionSummaryByCategory>;
 } => {
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState();
     const [summaries, setSummaries] = useState<
         Array<TransactionSummaryByCategory>
     >([]);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {

@@ -1,21 +1,20 @@
 import React from 'react';
-
 import Typography from '@material-ui/core/Typography';
 import {
     CenteredContainer,
-    FullHeightContainer,
-    Header
-} from '../../components';
+    ViewVerticalContainer
+} from '@nareshbhatia/react-force';
+import { Header } from '../../components';
 
 export const NotFoundPage = () => {
     return (
-        <FullHeightContainer>
+        <ViewVerticalContainer>
             <Header />
             <CenteredContainer>
                 <Typography variant="h3" color="textSecondary">
                     Page Not Found
                 </Typography>
             </CenteredContainer>
-        </FullHeightContainer>
+        </ViewVerticalContainer>
     );
 };

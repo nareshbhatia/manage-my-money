@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Loading, ViewVerticalContainer } from '@nareshbhatia/react-force';
 import {
     BarChart,
     Bar,
@@ -8,7 +9,7 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
-import { FullHeightContainer, Header, Loading } from '../../components';
+import { Header } from '../../components';
 import { TimePeriods } from '../../utils';
 import { ChartHeader } from './ChartHeader';
 import { useTransactionSummary } from './useTransactionSummary';
@@ -43,7 +44,7 @@ export const AnalyzePage = () => {
     );
 
     return (
-        <FullHeightContainer>
+        <ViewVerticalContainer>
             <Header />
             <ChartHeader
                 netIncome={netIncome}
@@ -84,6 +85,6 @@ export const AnalyzePage = () => {
                     />
                 </BarChart>
             </ResponsiveContainer>
-        </FullHeightContainer>
+        </ViewVerticalContainer>
     );
 };

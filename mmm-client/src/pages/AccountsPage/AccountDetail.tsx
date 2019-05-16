@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
+import { FlexContainer } from '@nareshbhatia/react-force';
 import { AgGridEvent, CellDoubleClickedEvent, ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { LocalDate } from 'js-joda';
 import { observer } from 'mobx-react';
-import { FlexContainer, FloatingAddButton } from '../../components';
+import { FloatingAddButton } from '../../components';
 import { RootStoreContext } from '../../contexts';
 import { Transaction, TransactionInput } from '../../models';
 import { numberToMoney } from '../../utils';

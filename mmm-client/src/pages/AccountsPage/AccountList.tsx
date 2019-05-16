@@ -3,8 +3,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/styles';
+import { FlexContainer } from '@nareshbhatia/react-force';
 import { observer } from 'mobx-react';
-import { FlexContainer, Title } from '../../components';
+import { Title } from '../../components';
 import { RootStoreContext } from '../../contexts';
 
 const useStyles = makeStyles({
