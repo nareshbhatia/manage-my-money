@@ -29,7 +29,7 @@ export const Title: React.FC<TypographyProps> = ({
     const classes = useStyles();
     const className = classNames(classes.title, classNameProp);
     return (
-        <Typography className={className} variant={variant}>
+        <Typography className={className} component="h1" variant={variant}>
             {children}
         </Typography>
     );
