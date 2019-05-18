@@ -14,7 +14,7 @@ rootStore.init();
 const historyAdapter = new HistoryAdapter(rootStore.routerStore, history);
 historyAdapter.observeRouterStateChanges();
 
-export const App = () => {
+export const App: React.FC = () => {
     return (
         <ErrorBoundary>
             <Suspense fallback={<Loading />}>

@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import { configure } from 'mobx';
 import { App } from './App';
-import { theme } from './theme';
+import { theme } from './components';
 
 import './index.scss';
 
