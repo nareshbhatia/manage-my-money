@@ -25,7 +25,7 @@
         "express-async-handler": "^1.1.4",
         "join-js": "^1.0.2",
         "js-joda": "^1.10.1",
-        "knex": "^0.16.3",
+        "knex": "^0.19.5",
         "pg": "^7.9.0",
         "pg-parse-float": "0.0.1",
         "swagger-ui-express": "^4.0.2"
